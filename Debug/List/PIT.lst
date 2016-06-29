@@ -1,0 +1,264 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.20.2.7424/W32 for ARM        26/May/2016  12:05:00
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\PIT.c
+#    Command line =  
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\PIT.c" -D DEBUG -lCN
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\" -lB
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\" -o
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\Obj\" --no_cse --no_unroll
+#        --no_inline --no_code_motion --no_tbaa --no_clustering --no_scheduling
+#        --debug --endian=little --cpu=Cortex-M4 -e --fpu=None --dlib_config
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -Ol --use_c++_inline
+#    List file    =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\PIT.lst
+#    Object file  =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\Obj\PIT.o
+#
+###############################################################################
+
+C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\PIT.c
+      1          #include "PIT.h"
+      2          /*************************************************************************
+      3          PIT0初始化
+      4          
+      5          
+      6          
+      7          *************************************************************************/
+      8          
+      9          
+     10          
+     11          
+
+   \                                 In section .text, align 2, keep-with-next
+     12          void Timer0_Init(void)
+     13          {
+   \                     Timer0_Init: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     14           
+     15              // PIT clock enable:
+     16              SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
+   \   00000002   0x....             LDR.N    R0,??DataTable5  ;; 0x4004803c
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0xF450 0x0000      ORRS     R0,R0,#0x800000
+   \   0000000A   0x....             LDR.N    R1,??DataTable5  ;; 0x4004803c
+   \   0000000C   0x6008             STR      R0,[R1, #+0]
+     17              
+     18              // enable the clock for PIT Timers:
+     19              PIT_MCR = 0;        //使能PIT时钟
+   \   0000000E   0x2000             MOVS     R0,#+0
+   \   00000010   0x....             LDR.N    R1,??DataTable5_1  ;; 0x40037000
+   \   00000012   0x6008             STR      R0,[R1, #+0]
+     20               
+     21              // config the period of PIT0:
+     22              PIT_LDVAL0 = PIT0_INIT_VAL;         //定时器未设置  频率为PLL频率 （96M） 
+   \   00000014   0xF64A 0x70C8      MOVW     R0,#+45000
+   \   00000018   0x....             LDR.N    R1,??DataTable5_2  ;; 0x40037100
+   \   0000001A   0x6008             STR      R0,[R1, #+0]
+     23              
+     24              // enable interrupt for PIT0:
+     25              PIT_TCTRL0 |= PIT_TCTRL_TIE_MASK;  // TIE=1:Interrupt will be requested whenever TIF is set
+   \   0000001C   0x....             LDR.N    R0,??DataTable5_3  ;; 0x40037108
+   \   0000001E   0x6800             LDR      R0,[R0, #+0]
+   \   00000020   0xF050 0x0002      ORRS     R0,R0,#0x2
+   \   00000024   0x....             LDR.N    R1,??DataTable5_3  ;; 0x40037108
+   \   00000026   0x6008             STR      R0,[R1, #+0]
+     26              
+     27              enable_irq(IRQ_NUM_PIT0);
+   \   00000028   0x2044             MOVS     R0,#+68
+   \   0000002A   0x.... 0x....      BL       enable_irq
+     28              
+     29          }
+   \   0000002E   0xBD01             POP      {R0,PC}          ;; return
+     30          
+     31          
+
+   \                                 In section .text, align 2, keep-with-next
+     32          void Timer1_Init(void)
+     33          {
+   \                     Timer1_Init: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     34           
+     35              // PIT clock enable:
+     36              SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
+   \   00000002   0x....             LDR.N    R0,??DataTable5  ;; 0x4004803c
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0xF450 0x0000      ORRS     R0,R0,#0x800000
+   \   0000000A   0x....             LDR.N    R1,??DataTable5  ;; 0x4004803c
+   \   0000000C   0x6008             STR      R0,[R1, #+0]
+     37              
+     38              // enable the clock for PIT Timers:
+     39              PIT_MCR = 0;
+   \   0000000E   0x2000             MOVS     R0,#+0
+   \   00000010   0x....             LDR.N    R1,??DataTable5_1  ;; 0x40037000
+   \   00000012   0x6008             STR      R0,[R1, #+0]
+     40               
+     41              // config the period of PIT0:
+     42              PIT_LDVAL1 = PIT1_INIT_VAL;
+   \   00000014   0x....             LDR.N    R0,??DataTable5_4  ;; 0xb71b0
+   \   00000016   0x....             LDR.N    R1,??DataTable5_5  ;; 0x40037110
+   \   00000018   0x6008             STR      R0,[R1, #+0]
+     43              
+     44              // enable interrupt for PIT0:
+     45              PIT_TCTRL1 |= PIT_TCTRL_TIE_MASK;  // TIE=1:Interrupt will be requested whenever TIF is set
+   \   0000001A   0x....             LDR.N    R0,??DataTable5_6  ;; 0x40037118
+   \   0000001C   0x6800             LDR      R0,[R0, #+0]
+   \   0000001E   0xF050 0x0002      ORRS     R0,R0,#0x2
+   \   00000022   0x....             LDR.N    R1,??DataTable5_6  ;; 0x40037118
+   \   00000024   0x6008             STR      R0,[R1, #+0]
+     46              
+     47              enable_irq(IRQ_NUM_PIT1);
+   \   00000026   0x2045             MOVS     R0,#+69
+   \   00000028   0x.... 0x....      BL       enable_irq
+     48              
+     49          }
+   \   0000002C   0xBD01             POP      {R0,PC}          ;; return
+     50          
+     51          /******************************************************************
+     52          Function:           EnableTimer0
+     53          Description:        Initialize timer
+     54          Calls:
+     55          Called By:          NONE
+     56          Input:              NONE
+     57          Output:             NONE
+     58          Return:             NONE
+     59          ******************************************************************/
+     60          
+
+   \                                 In section .text, align 2, keep-with-next
+     61          void EnableTimer0(void) 
+     62          {
+     63              ENABLE_PIT0;   
+   \                     EnableTimer0: (+1)
+   \   00000000   0x....             LDR.N    R0,??DataTable5_3  ;; 0x40037108
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000008   0x....             LDR.N    R1,??DataTable5_3  ;; 0x40037108
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+     64          }
+   \   0000000C   0x4770             BX       LR               ;; return
+     65          
+     66          
+
+   \                                 In section .text, align 2, keep-with-next
+     67          void EnableTimer1(void) 
+     68          {
+     69              ENABLE_PIT1;   
+   \                     EnableTimer1: (+1)
+   \   00000000   0x....             LDR.N    R0,??DataTable5_6  ;; 0x40037118
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000008   0x....             LDR.N    R1,??DataTable5_6  ;; 0x40037118
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+     70          }
+   \   0000000C   0x4770             BX       LR               ;; return
+     71          /******************************************************************
+     72          Function:           DisableTimer0
+     73          Description:        Initialize timer
+     74          Calls:
+     75          Called By:          NONE
+     76          Input:              NONE
+     77          Output:             NONE
+     78          Return:             NONE
+     79          ******************************************************************/
+     80          
+
+   \                                 In section .text, align 2, keep-with-next
+     81          void DisableTimer0(void) 
+     82          {  
+     83              DISABLE_PIT0;  
+   \                     DisableTimer0: (+1)
+   \   00000000   0x....             LDR.N    R0,??DataTable5_3  ;; 0x40037108
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0x0840             LSRS     R0,R0,#+1
+   \   00000006   0x0040             LSLS     R0,R0,#+1
+   \   00000008   0x....             LDR.N    R1,??DataTable5_3  ;; 0x40037108
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+     84          }
+   \   0000000C   0x4770             BX       LR               ;; return
+     85          
+
+   \                                 In section .text, align 2, keep-with-next
+     86          void DisableTimer1(void) 
+     87          {  
+     88              DISABLE_PIT1;  
+   \                     DisableTimer1: (+1)
+   \   00000000   0x....             LDR.N    R0,??DataTable5_6  ;; 0x40037118
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0x0840             LSRS     R0,R0,#+1
+   \   00000006   0x0040             LSLS     R0,R0,#+1
+   \   00000008   0x....             LDR.N    R1,??DataTable5_6  ;; 0x40037118
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+     89          }
+   \   0000000C   0x4770             BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \   00000000   0x4004803C         DC32     0x4004803c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_1:
+   \   00000000   0x40037000         DC32     0x40037000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_2:
+   \   00000000   0x40037100         DC32     0x40037100
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_3:
+   \   00000000   0x40037108         DC32     0x40037108
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \   00000000   0x000B71B0         DC32     0xb71b0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_5:
+   \   00000000   0x40037110         DC32     0x40037110
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_6:
+   \   00000000   0x40037118         DC32     0x40037118
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   DisableTimer0
+       0   DisableTimer1
+       0   EnableTimer0
+       0   EnableTimer1
+       8   Timer0_Init
+         8   -> enable_irq
+       8   Timer1_Init
+         8   -> enable_irq
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_2
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable5_6
+      14  DisableTimer0
+      14  DisableTimer1
+      14  EnableTimer0
+      14  EnableTimer1
+      48  Timer0_Init
+      46  Timer1_Init
+
+ 
+ 178 bytes in section .text
+ 
+ 178 bytes of CODE memory
+
+Errors: none
+Warnings: none

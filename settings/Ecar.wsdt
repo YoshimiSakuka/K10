@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>TFT32/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>232</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>980</ColumnWidth1><ColumnWidth2>261</ColumnWidth2><ColumnWidth3>65</ColumnWidth3></Build>
+    <TerminalIO/><Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1307</ColumnWidth1></Debug-Log></Static>
+    <Windows>
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-9971-13696</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>TFT32</ExpandedNode><ExpandedNode>TFT32/Flash</ExpandedNode><ExpandedNode>TFT32/HardWare</ExpandedNode><ExpandedNode>TFT32/HardWare/Balance</ExpandedNode><ExpandedNode>TFT32/HardWare/LCD_5110</ExpandedNode><ExpandedNode>TFT32/HardWare/SONYCCD</ExpandedNode><ExpandedNode>TFT32/HardWare/mma8451</ExpandedNode><ExpandedNode>TFT32/ISR</ExpandedNode><ExpandedNode>TFT32/UART</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-32660-16341</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-30156-18947</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\main.c</Filename><XPos>0</XPos><YPos>781</YPos><SelStart>29994</SelStart><SelEnd>29994</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\SONYCCD.c</Filename><XPos>0</XPos><YPos>1391</YPos><SelStart>40703</SelStart><SelEnd>40703</SelEnd></Tab><ActiveTab>1</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\LCD_5110.c</Filename><XPos>0</XPos><YPos>18</YPos><SelStart>738</SelStart><SelEnd>738</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\SONYCCD.h</Filename><XPos>0</XPos><YPos>12</YPos><SelStart>1637</SelStart><SelEnd>1637</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\Balance.c</Filename><XPos>0</XPos><YPos>81</YPos><SelStart>3015</SelStart><SelEnd>3015</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\isr.c</Filename><XPos>0</XPos><YPos>261</YPos><SelStart>7741</SelStart><SelEnd>7741</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\mma8451.c</Filename><XPos>0</XPos><YPos>55</YPos><SelStart>1282</SelStart><SelEnd>1282</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\Balance.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\Flash.c</Filename><XPos>0</XPos><YPos>143</YPos><SelStart>4741</SelStart><SelEnd>4741</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\_printf.c</Filename><XPos>0</XPos><YPos>174</YPos><SelStart>7209</SelStart><SelEnd>7318</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-01e12f88><key>iaridepm.enu1</key></Toolbar-01e12f88></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>499</Bottom><Right>323</Right><x>-2</x><y>-2</y><xscreen>240</xscreen><yscreen>374</yscreen><sizeHorzCX>175695</sizeHorzCX><sizeHorzCY>515862</sizeHorzCY><sizeVertCX>237921</sizeVertCX><sizeVertCY>691034</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>181</Bottom><Right>1368</Right><x>-2</x><y>-2</y><xscreen>1370</xscreen><yscreen>183</yscreen><sizeHorzCX>1002928</sizeHorzCX><sizeHorzCY>252414</sizeHorzCY><sizeVertCX>175695</sizeVertCX><sizeVertCY>515862</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

@@ -1,0 +1,104 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.20.2.7424/W32 for ARM        26/May/2016  12:04:42
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\assert.c
+#    Command line =  
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\assert.c" -D DEBUG -lCN
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\" -lB
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\" -o
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\Obj\" --no_cse --no_unroll
+#        --no_inline --no_code_motion --no_tbaa --no_clustering --no_scheduling
+#        --debug --endian=little --cpu=Cortex-M4 -e --fpu=None --dlib_config
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -Ol --use_c++_inline
+#    List file    =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\assert.lst
+#    Object file  =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\Obj\assert.o
+#
+###############################################################################
+
+C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\assert.c
+      1          #include "assert.h"
+      2          
+      3          
+
+   \                                 In section .rodata, align 4
+      4          const char ASSERT_FAILED_STR1[] = "Assertion failed in %s at line %d\n";
+   \                     ASSERT_FAILED_STR1:
+   \   00000000   0x41 0x73          DC8 "Assertion failed in %s at line %d\012"
+   \              0x73 0x65    
+   \              0x72 0x74    
+   \              0x69 0x6F    
+   \              0x6E 0x20    
+   \              0x66 0x61    
+   \              0x69 0x6C    
+   \              0x65 0x64    
+   \              0x20 0x69    
+   \              0x6E 0x20    
+   \              0x25 0x73    
+   \              0x20 0x61    
+   \              0x74 0x20    
+   \              0x6C 0x69    
+   \              0x6E 0x65    
+   \              0x20 0x25    
+   \              0x64 0x0A    
+   \              0x00         
+   \   00000023   0x00               DC8 0
+      5          
+
+   \                                 In section .text, align 4, keep-with-next
+      6          void assert_failed1(char *file, int line)
+      7          {
+   \                     assert_failed1: (+1)
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+      8              //int i;
+      9              //LED_init();
+     10              while (1)
+     11              {
+     12                  #ifdef DEBUG_PRINT
+     13                  printf(ASSERT_FAILED_STR1, file, line);  //打印错误信息
+   \                     ??assert_failed1_0: (+1)
+   \   00000006   0x002A             MOVS     R2,R5
+   \   00000008   0x0021             MOVS     R1,R4
+   \   0000000A   0x4802             LDR.N    R0,??assert_failed1_1
+   \   0000000C   0x.... 0x....      BL       printf
+   \   00000010   0xE7F9             B.N      ??assert_failed1_0
+   \   00000012   0xBF00             Nop      
+   \                     ??assert_failed1_1:
+   \   00000014   0x........         DC32     ASSERT_FAILED_STR1
+     14                  #endif
+     15                  //for (i = 0xffffff; i; i--) ;
+     16                  //water_lights();                         //用流水灯来指示进入错误状态
+     17                  //for (i = 0xffffff; i; i--) ;
+     18              }
+     19          }
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   assert_failed1
+        16   -> printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      36  ASSERT_FAILED_STR1
+      24  assert_failed1
+
+ 
+ 36 bytes in section .rodata
+ 24 bytes in section .text
+ 
+ 24 bytes of CODE  memory
+ 36 bytes of CONST memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,495 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.20.2.7424/W32 for ARM        26/May/2016  12:04:53
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\GPIO.c
+#    Command line =  
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\GPIO.c" -D DEBUG -lCN
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\" -lB
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\" -o
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\Obj\" --no_cse --no_unroll
+#        --no_inline --no_code_motion --no_tbaa --no_clustering --no_scheduling
+#        --debug --endian=little --cpu=Cortex-M4 -e --fpu=None --dlib_config
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -Ol --use_c++_inline
+#    List file    =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\GPIO.lst
+#    Object file  =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\Obj\GPIO.o
+#
+###############################################################################
+
+C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\GPIO.c
+      1          #include "GPIO.h"
+      2          
+      3          
+      4          //#ifdef  __cplusplus
+      5          //extern "C" {
+      6          //#endif
+      7            
+      8            
+      9          /******************************************************************************************************************/
+     10          /*GPIO port                                                                                                        */
+     11          /******************************************************************************************************************/
+     12          
+
+   \                                 In section .data, align 4
+     13          volatile struct GPIO_MemMap *GPIOx[5] = {PTA_BASE_PTR, PTB_BASE_PTR, PTC_BASE_PTR, PTD_BASE_PTR, PTE_BASE_PTR}; //定义五个指针数组保存 GPIOx 的地址
+   \                     GPIOx:
+   \   00000000   0x400FF000         DC32 400FF000H, 400FF040H, 400FF080H, 400FF0C0H, 400FF100H
+   \              0x400FF040   
+   \              0x400FF080   
+   \              0x400FF0C0   
+   \              0x400FF100   
+
+   \                                 In section .data, align 4
+     14          volatile struct PORT_MemMap *PORTX[5] = {PORTA_BASE_PTR, PORTB_BASE_PTR, PORTC_BASE_PTR, PORTD_BASE_PTR, PORTE_BASE_PTR};
+   \                     PORTX:
+   \   00000000   0x40049000         DC32 40049000H, 4004A000H, 4004B000H, 4004C000H, 4004D000H
+   \              0x4004A000   
+   \              0x4004B000   
+   \              0x4004C000   
+   \              0x4004D000   
+     15          
+     16          
+     17          /***FUNC+*********************************************************************/
+     18          /* Name   : GPIO_init                                                        */
+     19          /* Descrp : init Prot pin state                                              */
+     20          /* Input  : port -- select PORT A/B/C/D/E                                    */
+     21          /*          PinNum -- set pin number                                         */
+     22          /*          Dir -- pin in or out                                             */
+     23          /*          Level -- high or low                                             */
+     24          /* Output : None.                                                            */
+     25          /* Return : Prot  high or low level                                          */   
+     26          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     27          BOOL GPIO_Init(U8 Port, U8 PinNum, GPIO_CFG cfg, U8 Level)
+     28          {
+   \                     GPIO_Init: (+1)
+   \   00000000   0xE92D 0x41F0      PUSH     {R4-R8,LR}
+   \   00000004   0x0007             MOVS     R7,R0
+   \   00000006   0x000C             MOVS     R4,R1
+   \   00000008   0x4690             MOV      R8,R2
+   \   0000000A   0x001E             MOVS     R6,R3
+     29              //将GPIO端口号转换成端口寄存器组指针
+     30              GPIO_MemMapPtr pt = GPIO_get_pt_addr(Port);
+   \   0000000C   0x0038             MOVS     R0,R7
+   \   0000000E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000010   0x.... 0x....      BL       GPIO_get_pt_addr
+   \   00000014   0x0005             MOVS     R5,R0
+     31              PORT_MemMapPtr p  = GPIO_get_port_addr(Port);
+   \   00000016   0x0038             MOVS     R0,R7
+   \   00000018   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001A   0x.... 0x....      BL       GPIO_get_port_addr
+     32              
+     33              if (!p||!pt) 
+   \   0000001E   0x2800             CMP      R0,#+0
+   \   00000020   0xD001             BEQ.N    ??GPIO_Init_0
+   \   00000022   0x2D00             CMP      R5,#+0
+   \   00000024   0xD101             BNE.N    ??GPIO_Init_1
+     34              {
+     35                  return FALSE;  //参数错误
+   \                     ??GPIO_Init_0: (+1)
+   \   00000026   0x2000             MOVS     R0,#+0
+   \   00000028   0xE02D             B.N      ??GPIO_Init_2
+     36              }
+     37               
+     38              //设定通用端口引脚控制寄存器的值，设定为GPIO功能
+     39              PORT_PCR_REG(p, PinNum) = (0|PORT_PCR_MUX(1)|cfg);
+   \                     ??GPIO_Init_1: (+1)
+   \   0000002A   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   0000002E   0xF458 0x7180      ORRS     R1,R8,#0x100
+   \   00000032   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   00000034   0xF840 0x1024      STR      R1,[R0, R4, LSL #+2]
+     40          
+     41              //端口方向控制输入还是输出
+     42              if(((cfg&0x01) == GPI)||(cfg == GPI_UP)|| (cfg == GPI_UP_PF))
+   \   00000038   0xEA5F 0x70C8      LSLS     R0,R8,#+31
+   \   0000003C   0xD509             BPL.N    ??GPIO_Init_3
+   \   0000003E   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   00000042   0xF1B8 0x0F03      CMP      R8,#+3
+   \   00000046   0xD004             BEQ.N    ??GPIO_Init_3
+   \   00000048   0xFA5F 0xF888      UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+   \   0000004C   0xF1B8 0x0F13      CMP      R8,#+19
+   \   00000050   0xD105             BNE.N    ??GPIO_Init_4
+     43              //   最低位为0则输入   ||   输入上拉模式  ||   输入上拉，带无源滤波器
+     44              {
+     45                  GPIO_PDDR_REG(pt) &= ~(1<< PinNum);         //设置端口方向为输入
+   \                     ??GPIO_Init_3: (+1)
+   \   00000052   0x6968             LDR      R0,[R5, #+20]
+   \   00000054   0x2101             MOVS     R1,#+1
+   \   00000056   0x40A1             LSLS     R1,R1,R4
+   \   00000058   0x4388             BICS     R0,R0,R1
+   \   0000005A   0x6168             STR      R0,[R5, #+20]
+   \   0000005C   0xE012             B.N      ??GPIO_Init_5
+     46              }
+     47              else
+     48              {
+     49                  GPIO_PDDR_REG(pt) |= (1<<PinNum);           //设置端口方向为输出
+   \                     ??GPIO_Init_4: (+1)
+   \   0000005E   0x6968             LDR      R0,[R5, #+20]
+   \   00000060   0x2101             MOVS     R1,#+1
+   \   00000062   0x40A1             LSLS     R1,R1,R4
+   \   00000064   0x4308             ORRS     R0,R1,R0
+   \   00000066   0x6168             STR      R0,[R5, #+20]
+     50                  
+     51                  if(LVL_H == Level)                          //output
+   \   00000068   0xB2F6             UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
+   \   0000006A   0x2E01             CMP      R6,#+1
+   \   0000006C   0xD105             BNE.N    ??GPIO_Init_6
+     52                  {
+     53                      BIT_SET(PinNum, GPIO_PDOR_REG(pt));     //对端口输出控制，输出为1
+   \   0000006E   0x6828             LDR      R0,[R5, #+0]
+   \   00000070   0x2101             MOVS     R1,#+1
+   \   00000072   0x40A1             LSLS     R1,R1,R4
+   \   00000074   0x4308             ORRS     R0,R1,R0
+   \   00000076   0x6028             STR      R0,[R5, #+0]
+   \   00000078   0xE004             B.N      ??GPIO_Init_5
+     54                  }
+     55                  else
+     56                  {
+     57                      BIT_CLR(PinNum, GPIO_PDOR_REG(pt));     //对端口输出控制，输出为0
+   \                     ??GPIO_Init_6: (+1)
+   \   0000007A   0x6828             LDR      R0,[R5, #+0]
+   \   0000007C   0x2101             MOVS     R1,#+1
+   \   0000007E   0x40A1             LSLS     R1,R1,R4
+   \   00000080   0x4388             BICS     R0,R0,R1
+   \   00000082   0x6028             STR      R0,[R5, #+0]
+     58                  }
+     59              }
+     60          
+     61              return TRUE;  //成功返回
+   \                     ??GPIO_Init_5: (+1)
+   \   00000084   0x2001             MOVS     R0,#+1
+   \                     ??GPIO_Init_2: (+1)
+   \   00000086   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+     62          }
+     63          
+     64          /***FUNC+*********************************************************************/
+     65          /* Name   : GPIO_SetBit                                                      */
+     66          /* Descrp : Set Prot pin high or low level                                   */
+     67          /* Input  : port -- select PORT A/B/C/D/E                                    */
+     68          /*          PinNum -- set pin number                                         */
+     69          /*          Level -- state high or low                                       */
+     70          /* Output : None.                                                            */
+     71          /* Return : Prot  high or low level                                          */   
+     72          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     73          void GPIO_SetBit(U8 Port, U8 PinNum, U8 Level)
+     74          {
+   \                     GPIO_SetBit: (+1)
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x000C             MOVS     R4,R1
+   \   00000004   0x0015             MOVS     R5,R2
+     75              //将GPIO端口号转换成端口寄存器组指针
+     76              GPIO_MemMapPtr pt = GPIO_get_pt_addr(Port);
+   \   00000006   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000008   0x.... 0x....      BL       GPIO_get_pt_addr
+     77                  
+     78              if (Level == 0) //控制为低电平
+   \   0000000C   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   0000000E   0x2D00             CMP      R5,#+0
+   \   00000010   0xD105             BNE.N    ??GPIO_SetBit_0
+     79              {
+     80                  BIT_CLR(PinNum, GPIO_PDOR_REG(pt));
+   \   00000012   0x6801             LDR      R1,[R0, #+0]
+   \   00000014   0x2201             MOVS     R2,#+1
+   \   00000016   0x40A2             LSLS     R2,R2,R4
+   \   00000018   0x4391             BICS     R1,R1,R2
+   \   0000001A   0x6001             STR      R1,[R0, #+0]
+   \   0000001C   0xE004             B.N      ??GPIO_SetBit_1
+     81              }
+     82              else 
+     83              {
+     84                  //控制为高电平
+     85                  BIT_SET(PinNum, GPIO_PDOR_REG(pt));
+   \                     ??GPIO_SetBit_0: (+1)
+   \   0000001E   0x6801             LDR      R1,[R0, #+0]
+   \   00000020   0x2201             MOVS     R2,#+1
+   \   00000022   0x40A2             LSLS     R2,R2,R4
+   \   00000024   0x4311             ORRS     R1,R2,R1
+   \   00000026   0x6001             STR      R1,[R0, #+0]
+     86              }
+     87          }
+   \                     ??GPIO_SetBit_1: (+1)
+   \   00000028   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+     88          
+     89          /***FUNC+*********************************************************************/
+     90          /* Name   : Gpio_GetBit                                                      */
+     91          /* Descrp : get Prot Pin number high or low level                            */
+     92          /* Input  : port -- select PORT A/B/C/D/E                                    */
+     93          /*          PinNum -- select pin 0～31                                       */
+     94          /* Output : None.                                                            */
+     95          /* Return : Prot Pin number high or low level                                */   
+     96          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     97          U8 GPIO_GetBit(U8 Port, U8 PinNum)
+     98          {
+   \                     GPIO_GetBit: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x000C             MOVS     R4,R1
+     99              U8 i; 
+    100              //将GPIO端口号转换成端口寄存器组指针
+    101              GPIO_MemMapPtr pt = GPIO_get_pt_addr(Port);
+   \   00000004   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000006   0x.... 0x....      BL       GPIO_get_pt_addr
+    102              //查看引脚状态
+    103              i = BIT_GET(PinNum, GPIO_PDIR_REG(pt));
+   \   0000000A   0x6900             LDR      R0,[R0, #+16]
+   \   0000000C   0x40E0             LSRS     R0,R0,R4
+   \   0000000E   0xF010 0x0001      ANDS     R0,R0,#0x1
+    104              return i;     //返回引脚状态（0或1）
+   \   00000012   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000014   0xBD10             POP      {R4,PC}          ;; return
+    105          }
+    106          
+    107          /***FUNC+*********************************************************************/
+    108          /* Name   : Gpio_get_port_addr                                               */
+    109          /* Descrp : get Prot PTR.                                                    */
+    110          /* Input  : port -- select PORT A/B/C/D/E                                    */ 
+    111          /* Output : None.                                                            */
+    112          /* Return : PORT A/B/C/D/E Ptr.                                              */   
+    113          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    114          static PORT_MemMapPtr GPIO_get_port_addr (U8 port)
+    115          {
+    116              PORT_MemMapPtr p;
+    117              
+    118              switch(port)
+   \                     GPIO_get_port_addr: (+1)
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x2800             CMP      R0,#+0
+   \   00000004   0xD006             BEQ.N    ??GPIO_get_port_addr_0
+   \   00000006   0x2802             CMP      R0,#+2
+   \   00000008   0xD008             BEQ.N    ??GPIO_get_port_addr_1
+   \   0000000A   0xD305             BCC.N    ??GPIO_get_port_addr_2
+   \   0000000C   0x2804             CMP      R0,#+4
+   \   0000000E   0xD009             BEQ.N    ??GPIO_get_port_addr_3
+   \   00000010   0xD306             BCC.N    ??GPIO_get_port_addr_4
+   \   00000012   0xE009             B.N      ??GPIO_get_port_addr_5
+    119              {
+    120              case PORT_A:
+    121                  p = PORTA_BASE_PTR;
+   \                     ??GPIO_get_port_addr_0: (+1)
+   \   00000014   0x....             LDR.N    R0,??DataTable1  ;; 0x40049000
+    122                  break;
+    123              case PORT_B:
+    124                  p = PORTB_BASE_PTR;
+    125                  break;
+    126              case PORT_C:
+    127                  p = PORTC_BASE_PTR;
+    128                  break;
+    129              case PORT_D:
+    130                  p = PORTD_BASE_PTR;
+    131                  break;
+    132              case PORT_E:
+    133                  p = PORTE_BASE_PTR;
+    134                  break;
+    135              default:
+    136                  return 0; //输入参数无效返回
+    137              }
+    138              
+    139              return p;
+   \                     ??GPIO_get_port_addr_6: (+1)
+   \                     ??GPIO_get_port_addr_7: (+1)
+   \   00000016   0x4770             BX       LR               ;; return
+   \                     ??GPIO_get_port_addr_2: (+1)
+   \   00000018   0x....             LDR.N    R0,??DataTable1_1  ;; 0x4004a000
+   \   0000001A   0xE7FC             B.N      ??GPIO_get_port_addr_6
+   \                     ??GPIO_get_port_addr_1: (+1)
+   \   0000001C   0x....             LDR.N    R0,??DataTable1_2  ;; 0x4004b000
+   \   0000001E   0xE7FA             B.N      ??GPIO_get_port_addr_6
+   \                     ??GPIO_get_port_addr_4: (+1)
+   \   00000020   0x....             LDR.N    R0,??DataTable1_3  ;; 0x4004c000
+   \   00000022   0xE7F8             B.N      ??GPIO_get_port_addr_6
+   \                     ??GPIO_get_port_addr_3: (+1)
+   \   00000024   0x....             LDR.N    R0,??DataTable1_4  ;; 0x4004d000
+   \   00000026   0xE7F6             B.N      ??GPIO_get_port_addr_6
+   \                     ??GPIO_get_port_addr_5: (+1)
+   \   00000028   0x2000             MOVS     R0,#+0
+   \   0000002A   0xE7F4             B.N      ??GPIO_get_port_addr_7
+    140          }
+    141          
+    142          /***FUNC+*********************************************************************/
+    143          /* Name   : Gpio_get_pt_addr                                                 */
+    144          /* Descrp : get Prot PTR.                                                    */
+    145          /* Input  : port -- select PORT A/B/C/D/E                                    */ 
+    146          /* Output : None.                                                            */
+    147          /* Return : PORT A/B/C/D/E Ptr.                                              */   
+    148          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    149          static GPIO_MemMapPtr GPIO_get_pt_addr(U8 port)
+    150          {
+    151              GPIO_MemMapPtr p;
+    152              
+    153              switch(port)
+   \                     GPIO_get_pt_addr: (+1)
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x2800             CMP      R0,#+0
+   \   00000004   0xD006             BEQ.N    ??GPIO_get_pt_addr_0
+   \   00000006   0x2802             CMP      R0,#+2
+   \   00000008   0xD008             BEQ.N    ??GPIO_get_pt_addr_1
+   \   0000000A   0xD305             BCC.N    ??GPIO_get_pt_addr_2
+   \   0000000C   0x2804             CMP      R0,#+4
+   \   0000000E   0xD009             BEQ.N    ??GPIO_get_pt_addr_3
+   \   00000010   0xD306             BCC.N    ??GPIO_get_pt_addr_4
+   \   00000012   0xE009             B.N      ??GPIO_get_pt_addr_5
+    154              {
+    155              case PORT_A:
+    156                  p = PTA_BASE_PTR;
+   \                     ??GPIO_get_pt_addr_0: (+1)
+   \   00000014   0x....             LDR.N    R0,??DataTable1_5  ;; 0x400ff000
+    157                  break;
+    158              case PORT_B:
+    159                  p = PTB_BASE_PTR;
+    160                  break;
+    161              case PORT_C:
+    162                  p = PTC_BASE_PTR;
+    163                  break;
+    164              case PORT_D:
+    165                  p = PTD_BASE_PTR;
+    166                  break;
+    167              case PORT_E:
+    168                  p = PTE_BASE_PTR;
+    169                  break;
+    170              default:
+    171                  return 0; //输入参数无效返回
+    172              }
+    173              
+    174              return p;
+   \                     ??GPIO_get_pt_addr_6: (+1)
+   \                     ??GPIO_get_pt_addr_7: (+1)
+   \   00000016   0x4770             BX       LR               ;; return
+   \                     ??GPIO_get_pt_addr_2: (+1)
+   \   00000018   0x....             LDR.N    R0,??DataTable1_6  ;; 0x400ff040
+   \   0000001A   0xE7FC             B.N      ??GPIO_get_pt_addr_6
+   \                     ??GPIO_get_pt_addr_1: (+1)
+   \   0000001C   0x....             LDR.N    R0,??DataTable1_7  ;; 0x400ff080
+   \   0000001E   0xE7FA             B.N      ??GPIO_get_pt_addr_6
+   \                     ??GPIO_get_pt_addr_4: (+1)
+   \   00000020   0x....             LDR.N    R0,??DataTable1_8  ;; 0x400ff0c0
+   \   00000022   0xE7F8             B.N      ??GPIO_get_pt_addr_6
+   \                     ??GPIO_get_pt_addr_3: (+1)
+   \   00000024   0x....             LDR.N    R0,??DataTable1_9  ;; 0x400ff100
+   \   00000026   0xE7F6             B.N      ??GPIO_get_pt_addr_6
+   \                     ??GPIO_get_pt_addr_5: (+1)
+   \   00000028   0x2000             MOVS     R0,#+0
+   \   0000002A   0xE7F4             B.N      ??GPIO_get_pt_addr_7
+    175          }
+    176          
+    177          
+    178            
+    179          /******************翻转电平************/
+
+   \                                 In section .text, align 2, keep-with-next
+    180          void gpio_reverse (GPIO_MemMapPtr port, int index)
+    181          {
+    182              GPIO_PDOR_REG(port) ^= (1<<index);
+   \                     gpio_reverse: (+1)
+   \   00000000   0x6802             LDR      R2,[R0, #+0]
+   \   00000002   0x2301             MOVS     R3,#+1
+   \   00000004   0xFA13 0xF101      LSLS     R1,R3,R1
+   \   00000008   0x4051             EORS     R1,R1,R2
+   \   0000000A   0x6001             STR      R1,[R0, #+0]
+    183          }
+   \   0000000C   0x4770             BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x40049000         DC32     0x40049000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x4004A000         DC32     0x4004a000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x4004B000         DC32     0x4004b000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0x4004C000         DC32     0x4004c000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0x4004D000         DC32     0x4004d000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_5:
+   \   00000000   0x400FF000         DC32     0x400ff000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_6:
+   \   00000000   0x400FF040         DC32     0x400ff040
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_7:
+   \   00000000   0x400FF080         DC32     0x400ff080
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_8:
+   \   00000000   0x400FF0C0         DC32     0x400ff0c0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_9:
+   \   00000000   0x400FF100         DC32     0x400ff100
+    184            
+    185            
+    186          //#ifdef  __cplusplus
+    187          //}
+    188          //#endif
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   GPIO_GetBit
+         8   -> GPIO_get_pt_addr
+      24   GPIO_Init
+        24   -> GPIO_get_port_addr
+        24   -> GPIO_get_pt_addr
+      16   GPIO_SetBit
+        16   -> GPIO_get_pt_addr
+       0   GPIO_get_port_addr
+       0   GPIO_get_pt_addr
+       0   gpio_reverse
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+       4  ??DataTable1_5
+       4  ??DataTable1_6
+       4  ??DataTable1_7
+       4  ??DataTable1_8
+       4  ??DataTable1_9
+      22  GPIO_GetBit
+     138  GPIO_Init
+      42  GPIO_SetBit
+      44  GPIO_get_port_addr
+      44  GPIO_get_pt_addr
+      20  GPIOx
+      20  PORTX
+      14  gpio_reverse
+
+ 
+  40 bytes in section .data
+ 344 bytes in section .text
+ 
+ 344 bytes of CODE memory
+  40 bytes of DATA memory
+
+Errors: none
+Warnings: none

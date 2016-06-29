@@ -1,0 +1,124 @@
+[Stack]
+FillEnabled=0
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnLogOnly=1
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[DebugChecksum]
+Checksum=-1090854695
+[Exceptions]
+StopOnUncaught=_ 0
+StopOnThrow=_ 0
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[JLinkDriver]
+TraceBufferSize=0x00010000
+TraceStallIfFIFOFull=0x00000000
+TracePortSize=0x00000004
+CStepIntDis=_ 0
+[InterruptLog]
+LogEnabled=0
+SumEnabled=0
+GraphEnabled=0
+ShowTimeLog=1
+ShowTimeSum=1
+SumSortOrder=0
+[Interrupts]
+Enabled=1
+[MemoryMap]
+Enabled=0
+Base=0
+UseAuto=0
+TypeViolation=1
+UnspecRange=1
+ActionState=1
+[CodeCoverage]
+Enabled=_ 0
+[array_types]
+Fmt0=byte[10]	3	0
+Fmt1=byte[128]	3	0
+Fmt2=byte[30]	3	0
+Fmt3=byte[5]	3	0
+Fmt4=char[10]	5	0
+Fmt5=char[4]	3	0
+Fmt6=int[8]	3	0
+Fmt7=u8[160]	3	0
+Fmt8=u8[32]	3	0
+Fmt9=u8[36]	3	0
+Fmt10=unsigned char[8]	3	0
+[watch_formats]
+Fmt0={W}42:Angle_Kd	0	5
+Fmt1={W}42:BlockEN	3	0
+Fmt2={W}42:BmaCnt	3	0
+Fmt3={W}42:GrayMax	3	0
+Fmt4={W}42:GrayMaxl	3	0
+Fmt5={W}42:GrayMaxr	3	0
+Fmt6={W}42:GrayMin	3	0
+Fmt7={W}42:GrayMinl	3	0
+Fmt8={W}42:GrayMinr	3	0
+Fmt9={W}42:L_LineStopPtr	3	0
+Fmt10={W}42:LineStop	3	0
+Fmt11={W}42:Lthreshold	3	0
+Fmt12={W}42:R_LineStopPtr	3	0
+Fmt13={W}42:R_angle	0	7
+Fmt14={W}42:RampEN	3	0
+Fmt15={W}42:Redge	3	1
+Fmt16={W}42:SpeedCnt	3	1
+Fmt17={W}42:StopEN	3	0
+Fmt18={W}42:TurnCnt	3	0
+Fmt19={W}42:WordEN	3	0
+Fmt20={W}42:a	0	7
+Fmt21={W}42:error_flag	3	0
+Fmt22={W}42:issue_threshold	3	0
+Fmt23={W}42:testpwm	3	0
+Fmt24={W}42:testpwm1	3	0
+Fmt25={W}42:testpwm2	3	0
+Fmt26={W}42:testpwm3	3	0
+Fmt27={W}42:testpwm4	3	0
+Fmt28={W}42:threshold	3	0
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=1
+Graph=0
+Symbiont=0
+Exclusions=
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Count=0
+[Aliases]
+A0=_ "C:\Users\Administrator\Desktop\1.   2  7\common\main.c" ""
+A1=_ "C:\Users\Administrator\Desktop\1.30   BLOCK\common\main.c" ""
+A2=_ "C:\Users\Administrator\Desktop\2.7换结构BLOCK and  black\common\main.c" ""
+A3=_ "C:\Users\Administrator\Desktop\2.7换结构BLOCK nd  black\common\main.c" ""
+A4=_ "C:\Users\Administrator\Desktop\2012115206\hxb\common\main.c" ""
+A5=_ "C:\Users\Administrator\Desktop\3.13换结构BLOCK nd  black\common\ADC.c" ""
+A6=_ "C:\Users\Administrator\Desktop\3.6换结构BLOCK nd  black\common\main.c" ""
+A7=_ "C:\Users\Administrator\Desktop\4.1换结构BLOCK nd  black\common\main.c" ""
+A8=_ "C:\Users\Administrator\Desktop\4.7换结构BLOCK nd  black\common\main.c" ""
+A9=_ "C:\Users\Administrator\Desktop\NEW E\common\ADC.c" ""
+A10=_ "C:\Users\Administrator\Desktop\NEW Ehujianjun\common\main.c" ""
+A11=_ "C:\Users\Administrator\Desktop\NFS.NO 2\common\ADC.c" ""
+A12=_ "C:\Users\Administrator\Desktop\NFS.NO 2\common\main.c" ""
+A13=_ "C:\Users\Administrator\Desktop\hx\common\main.c" ""
+A14=_ "C:\Users\Administrator\Desktop\新建文件夹\1. 26\common\main.c" ""
+A15=_ "C:\Users\Administrator\Desktop\新建文件夹\1.21\common\main.c" ""
+A16=_ "C:\Users\Administrator\Desktop\新建文件夹\1.23\common\main.c" ""
+A17=_ "J:\4.1换结构BLOCK nd  black\common\main.c" ""
+Count=18
+SuppressDialog=1

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>TFT32/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>132</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>779</ColumnWidth1><ColumnWidth2>260</ColumnWidth2><ColumnWidth3>69</ColumnWidth3></Build>
+      <TerminalIO/>
+    <Debug-Log><ColumnWidth0>19</ColumnWidth0><ColumnWidth1>1382</ColumnWidth1></Debug-Log></Static>
+    <Windows>
+      
+      
+    <Wnd2>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-16004-23156</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>TFT32</ExpandedNode><ExpandedNode>TFT32/CLOCK</ExpandedNode><ExpandedNode>TFT32/GPIO</ExpandedNode><ExpandedNode>TFT32/LCD_5110</ExpandedNode><ExpandedNode>TFT32/Output</ExpandedNode><ExpandedNode>TFT32/TFT32</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd2><Wnd3>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-18158-23525</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-7398-22799</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd3></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\K60_datatype.h</Filename><XPos>0</XPos><YPos>22</YPos><SelStart>2456</SelStart><SelEnd>2456</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\TFT32.c</Filename><XPos>0</XPos><YPos>2510</YPos><SelStart>203878</SelStart><SelEnd>205895</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\TFT32.h</Filename><XPos>0</XPos><YPos>66</YPos><SelStart>5594</SelStart><SelEnd>5594</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\_printf.c</Filename><XPos>0</XPos><YPos>111</YPos><SelStart>4769</SelStart><SelEnd>4769</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\vectors.c</Filename><XPos>0</XPos><YPos>518</YPos><SelStart>15079</SelStart><SelEnd>15079</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\_printf.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>1144</SelStart><SelEnd>1144</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\LCD_5110.c</Filename><XPos>0</XPos><YPos>20</YPos><SelStart>989</SelStart><SelEnd>989</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\LCD_5110.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>374</SelStart><SelEnd>374</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\vectors.h</Filename><XPos>0</XPos><YPos>16</YPos><SelStart>2118</SelStart><SelEnd>2118</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\MK40N512VMD100.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\MK60N512VMD100.h</Filename><XPos>0</XPos><YPos>8985</YPos><SelStart>536942</SelStart><SelEnd>536942</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\WordLib.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>52</SelStart><SelEnd>52</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>554</SelStart><SelEnd>554</SelEnd></Tab><ActiveTab>12</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\..\IAR\&#x65B0;&#x5eFA;&#x6587;&#x4eF6;&#x5939;\arm\src\lib\dlib\main.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>512</SelStart><SelEnd>512</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\GPIO.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>4909</SelStart><SelEnd>4910</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\GPIO.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>1765</SelStart><SelEnd>1765</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\CLOCK.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>763</SelStart><SelEnd>763</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\common\CLOCK.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>99</SelStart><SelEnd>99</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-00f6ee78><key>iaridepm.enu1</key></Toolbar-00f6ee78></Sizes></Row0><Row1><Sizes><Toolbar-00ff7e30><key>debuggergui.enu1</key></Toolbar-00ff7e30></Sizes></Row1><Row2><Sizes><Toolbar-00ff7a48><key>armjlink.enu1</key></Toolbar-00ff7a48></Sizes></Row2></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>627</Bottom><Right>206</Right><x>-2</x><y>-2</y><xscreen>141</xscreen><yscreen>124</yscreen><sizeHorzCX>97917</sizeHorzCX><sizeHorzCY>144522</sizeHorzCY><sizeVertCX>144444</sizeVertCX><sizeVertCY>733100</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>138</Bottom><Right>1442</Right><x>-2</x><y>-2</y><xscreen>1444</xscreen><yscreen>140</yscreen><sizeHorzCX>1002778</sizeHorzCX><sizeHorzCY>163170</sizeHorzCY><sizeVertCX>97917</sizeVertCX><sizeVertCY>144522</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

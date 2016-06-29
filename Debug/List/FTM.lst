@@ -1,0 +1,2190 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.20.2.7424/W32 for ARM        26/May/2016  12:04:52
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\FTM.c
+#    Command line =  
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\FTM.c" -D DEBUG -lCN
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\" -lB
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\" -o
+#        "C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\Obj\" --no_cse --no_unroll
+#        --no_inline --no_code_motion --no_tbaa --no_clustering --no_scheduling
+#        --debug --endian=little --cpu=Cortex-M4 -e --fpu=None --dlib_config
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.0\arm\INC\c\DLib_Config_Normal.h" -Ol --use_c++_inline
+#    List file    =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\List\FTM.lst
+#    Object file  =  C:\Users\ye\Desktop\NFS.NO 2 - 副本\Debug\Obj\FTM.o
+#
+###############################################################################
+
+C:\Users\ye\Desktop\NFS.NO 2 - 副本\common\FTM.c
+      1          #include "FTM.h"
+      2          
+      3          
+      4          
+      5          
+      6          
+      7          ////////////////////////////////////////////////////////////////////////////////////////
+
+   \                                 In section .data, align 4
+      8          volatile struct FTM_MemMap *FTMx[3] = {FTM0_BASE_PTR, FTM1_BASE_PTR, FTM2_BASE_PTR};
+   \                     FTMx:
+   \   00000000   0x40038000         DC32 40038000H, 40039000H, 400B8000H
+   \              0x40039000   
+   \              0x400B8000   
+      9          
+     10          
+     11          
+     12          
+     13          /***FUNC+*********************************************************************/
+     14          /* Name   : Ftm_init                                                         */
+     15          /* Descrp : 初始对应的FTM通道                                                */
+     16          /* Input  : FTMChannel:FTM模块号.                                            */   
+     17          /* Output : None.                                                            */
+     18          /* Return : None.                                                            */   
+     19          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     20          void Ftm_init(U8 FTMChannel)
+     21          {
+     22              switch(FTMChannel)
+   \                     Ftm_init: (+1)
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x2800             CMP      R0,#+0
+   \   00000004   0xD003             BEQ.N    ??Ftm_init_0
+   \   00000006   0x2802             CMP      R0,#+2
+   \   00000008   0xD02D             BEQ.N    ??Ftm_init_1
+   \   0000000A   0xD316             BCC.N    ??Ftm_init_2
+   \   0000000C   0xE040             B.N      ??Ftm_init_3
+     23              {
+     24              case 0:      
+     25                SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK; //使能FTM时钟
+   \                     ??Ftm_init_0: (+1)
+   \   0000000E   0x.... 0x....      LDR.W    R0,??DataTable12  ;; 0x4004803c
+   \   00000012   0x6800             LDR      R0,[R0, #+0]
+   \   00000014   0xF050 0x7080      ORRS     R0,R0,#0x1000000
+   \   00000018   0x.... 0x....      LDR.W    R1,??DataTable12  ;; 0x4004803c
+   \   0000001C   0x6008             STR      R0,[R1, #+0]
+     26                //FTM_MOD_REG(FTM0_BASE_PTR) = 0x7530; 
+     27                FTM_MOD_REG(FTM0_BASE_PTR) = 0xEA60;  //60000  0.01s
+   \   0000001E   0xF64E 0x2060      MOVW     R0,#+60000
+   \   00000022   0x.... 0x....      LDR.W    R1,??DataTable12_1  ;; 0x40038008
+   \   00000026   0x6008             STR      R0,[R1, #+0]
+     28                FTM_CNTIN_REG(FTM0_BASE_PTR) = 0x0000;    //初始值
+   \   00000028   0x2000             MOVS     R0,#+0
+   \   0000002A   0x.... 0x....      LDR.W    R1,??DataTable12_2  ;; 0x4003804c
+   \   0000002E   0x6008             STR      R0,[R1, #+0]
+     29                FTM_SC_REG(FTM0_BASE_PTR) = 0x4B;//f = 6Mhz 0b01001011   4-3CLKS 01 选择系统时钟 0-2 PS011 8分频
+   \   00000030   0x204B             MOVS     R0,#+75
+   \   00000032   0x.... 0x....      LDR.W    R1,??DataTable12_3  ;; 0x40038000
+   \   00000036   0x6008             STR      R0,[R1, #+0]
+     30                break;
+   \   00000038   0xE02A             B.N      ??Ftm_init_3
+     31              case 1:
+     32                SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;
+   \                     ??Ftm_init_2: (+1)
+   \   0000003A   0x.... 0x....      LDR.W    R0,??DataTable12  ;; 0x4004803c
+   \   0000003E   0x6800             LDR      R0,[R0, #+0]
+   \   00000040   0xF050 0x7000      ORRS     R0,R0,#0x2000000
+   \   00000044   0x.... 0x....      LDR.W    R1,??DataTable12  ;; 0x4004803c
+   \   00000048   0x6008             STR      R0,[R1, #+0]
+     33                FTM_MOD_REG(FTM1_BASE_PTR) = 0x7530;
+   \   0000004A   0xF247 0x5030      MOVW     R0,#+30000
+   \   0000004E   0x.... 0x....      LDR.W    R1,??DataTable12_4  ;; 0x40039008
+   \   00000052   0x6008             STR      R0,[R1, #+0]
+     34                FTM_CNTIN_REG(FTM1_BASE_PTR) = 0x0000;
+   \   00000054   0x2000             MOVS     R0,#+0
+   \   00000056   0x.... 0x....      LDR.W    R1,??DataTable12_5  ;; 0x4003904c
+   \   0000005A   0x6008             STR      R0,[R1, #+0]
+     35                FTM_SC_REG(FTM1_BASE_PTR) = 0x4B;//f = 3Mhz
+   \   0000005C   0x204B             MOVS     R0,#+75
+   \   0000005E   0x.... 0x....      LDR.W    R1,??DataTable12_6  ;; 0x40039000
+   \   00000062   0x6008             STR      R0,[R1, #+0]
+     36                break;
+   \   00000064   0xE014             B.N      ??Ftm_init_3
+     37              case 2:
+     38                SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;
+   \                     ??Ftm_init_1: (+1)
+   \   00000066   0x.... 0x....      LDR.W    R0,??DataTable12_7  ;; 0x40048030
+   \   0000006A   0x6800             LDR      R0,[R0, #+0]
+   \   0000006C   0xF050 0x7080      ORRS     R0,R0,#0x1000000
+   \   00000070   0x.... 0x....      LDR.W    R1,??DataTable12_7  ;; 0x40048030
+   \   00000074   0x6008             STR      R0,[R1, #+0]
+     39                FTM_MOD_REG(FTM2_BASE_PTR) = 0x7530;
+   \   00000076   0xF247 0x5030      MOVW     R0,#+30000
+   \   0000007A   0x.... 0x....      LDR.W    R1,??DataTable12_8  ;; 0x400b8008
+   \   0000007E   0x6008             STR      R0,[R1, #+0]
+     40                FTM_CNTIN_REG(FTM2_BASE_PTR) = 0x0000;
+   \   00000080   0x2000             MOVS     R0,#+0
+   \   00000082   0x.... 0x....      LDR.W    R1,??DataTable12_9  ;; 0x400b804c
+   \   00000086   0x6008             STR      R0,[R1, #+0]
+     41                FTM_SC_REG(FTM2_BASE_PTR) = 0x4B;//f = 3Mhz
+   \   00000088   0x204B             MOVS     R0,#+75
+   \   0000008A   0x.... 0x....      LDR.W    R1,??DataTable12_10  ;; 0x400b8000
+   \   0000008E   0x6008             STR      R0,[R1, #+0]
+     42                break;      
+     43              }
+     44          }
+   \                     ??Ftm_init_3: (+1)
+   \   00000090   0x4770             BX       LR               ;; return
+     45          
+     46          
+     47          /***FUNC+*********************************************************************/
+     48          /* Name   : Ftm_stop                                                         */
+     49          /* Descrp : 关闭对应的FTM通道                                                */
+     50          /* Input  : FTMChannel:FTM模块号.                                            */   
+     51          /* Output : None.                                                            */
+     52          /* Return : None.                                                            */   
+     53          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     54          void Ftm_stop(U8 FTMChannel)
+     55          {
+     56              switch(FTMChannel)
+   \                     Ftm_stop: (+1)
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x2800             CMP      R0,#+0
+   \   00000004   0xD003             BEQ.N    ??Ftm_stop_0
+   \   00000006   0x2802             CMP      R0,#+2
+   \   00000008   0xD013             BEQ.N    ??Ftm_stop_1
+   \   0000000A   0xD309             BCC.N    ??Ftm_stop_2
+   \   0000000C   0xE019             B.N      ??Ftm_stop_3
+     57              {
+     58              case 0:
+     59                FTM_SC_REG(FTM0_BASE_PTR) &= ~FTM_SC_CLKS_MASK;
+   \                     ??Ftm_stop_0: (+1)
+   \   0000000E   0x.... 0x....      LDR.W    R0,??DataTable12_3  ;; 0x40038000
+   \   00000012   0x6800             LDR      R0,[R0, #+0]
+   \   00000014   0xF030 0x0018      BICS     R0,R0,#0x18
+   \   00000018   0x.... 0x....      LDR.W    R1,??DataTable12_3  ;; 0x40038000
+   \   0000001C   0x6008             STR      R0,[R1, #+0]
+     60                break;
+   \   0000001E   0xE010             B.N      ??Ftm_stop_3
+     61              case 1:
+     62                FTM_SC_REG(FTM1_BASE_PTR) &= ~FTM_SC_CLKS_MASK;
+   \                     ??Ftm_stop_2: (+1)
+   \   00000020   0x.... 0x....      LDR.W    R0,??DataTable12_6  ;; 0x40039000
+   \   00000024   0x6800             LDR      R0,[R0, #+0]
+   \   00000026   0xF030 0x0018      BICS     R0,R0,#0x18
+   \   0000002A   0x.... 0x....      LDR.W    R1,??DataTable12_6  ;; 0x40039000
+   \   0000002E   0x6008             STR      R0,[R1, #+0]
+     63                break;
+   \   00000030   0xE007             B.N      ??Ftm_stop_3
+     64              case 2:
+     65                FTM_SC_REG(FTM2_BASE_PTR) &= ~FTM_SC_CLKS_MASK;
+   \                     ??Ftm_stop_1: (+1)
+   \   00000032   0x.... 0x....      LDR.W    R0,??DataTable12_10  ;; 0x400b8000
+   \   00000036   0x6800             LDR      R0,[R0, #+0]
+   \   00000038   0xF030 0x0018      BICS     R0,R0,#0x18
+   \   0000003C   0x.... 0x....      LDR.W    R1,??DataTable12_10  ;; 0x400b8000
+   \   00000040   0x6008             STR      R0,[R1, #+0]
+     66                break;      
+     67              }
+     68          }
+   \                     ??Ftm_stop_3: (+1)
+   \   00000042   0x4770             BX       LR               ;; return
+     69          
+     70          
+     71          /***FUNC+*********************************************************************/
+     72          /* Name   : Ftm_enable_int                                                   */
+     73          /* Descrp : 开ftm中断                                                        */
+     74          /* Input  : FTMChannel:FTM模块号.                                            */   
+     75          /* Output : None.                                                            */
+     76          /* Return : None.                                                            */   
+     77          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     78          void Ftm_enable_int(U8 FTMChannel)
+     79          {
+   \                     Ftm_enable_int: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     80              enable_irq(FTM0_irq_no + FTMChannel);  //开FTM中断
+   \   00000002   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000004   0x303E             ADDS     R0,R0,#+62
+   \   00000006   0x.... 0x....      BL       enable_irq
+     81          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+     82          
+     83          
+     84          
+     85          /***FUNC+*********************************************************************/
+     86          /* Name   : Ftm_disable_int                                                  */
+     87          /* Descrp : 关ftm中断                                                        */
+     88          /* Input  : FTMChannel:FTM模块号.                                            */   
+     89          /* Output : None.                                                            */
+     90          /* Return : None.                                                            */   
+     91          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+     92          void Ftm_disable_int(U8 FTMChannel)
+     93          {
+   \                     Ftm_disable_int: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     94              disable_irq(FTM0_irq_no + FTMChannel);  //关FTM中断
+   \   00000002   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000004   0x303E             ADDS     R0,R0,#+62
+   \   00000006   0x.... 0x....      BL       disable_irq
+     95          }
+   \   0000000A   0xBD01             POP      {R0,PC}          ;; return
+     96          
+     97          
+     98          
+     99          
+    100          /*************************************************************************
+    101          *                             野火嵌入式开发工作室
+    102          *
+    103          *  函数名称：FTM_Input_init
+    104          *  功能说明：输入捕捉初始化函数
+    105          *  参数说明：FTMn        模块号（0、  1、  2）
+    106          *            CHn         通道号（0~7）
+    107          *            Input_cfg   输入捕捉配置（Rising、Falling、Rising_or_Falling）上升沿捕捉、下降沿捕捉、跳变沿捕捉
+    108          *  函数返回：无
+    109          *  修改时间：2012-1-26
+    110          *  备    注：CH0~CH3可以使用过滤器，未添加这功能
+    111          *************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    112          void FTM_Input_init(FTMn ftmn, CHn ch, Input_cfg cfg)
+    113          {
+   \                     FTM_Input_init: (+1)
+   \   00000000   0xB510             PUSH     {R4,LR}
+    114              
+    115              /******************* 开启时钟 和 复用IO口*******************/
+    116              //注，这里代码虽然长，但真正执行的就几条语句
+    117              switch(ftmn)
+   \   00000002   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000004   0x2800             CMP      R0,#+0
+   \   00000006   0xD005             BEQ.N    ??FTM_Input_init_0
+   \   00000008   0x2802             CMP      R0,#+2
+   \   0000000A   0xF000 0x80B6      BEQ.W    ??FTM_Input_init_1
+   \   0000000E   0xF0C0 0x8089      BCC.W    ??FTM_Input_init_2
+   \   00000012   0xE0DD             B.N      ??FTM_Input_init_3
+    118              {
+    119              case FTM0:
+    120                  SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK;                           //使能FTM0时钟
+   \                     ??FTM_Input_init_0: (+1)
+   \   00000014   0x.... 0x....      LDR.W    R3,??DataTable12  ;; 0x4004803c
+   \   00000018   0x681B             LDR      R3,[R3, #+0]
+   \   0000001A   0xF053 0x7380      ORRS     R3,R3,#0x1000000
+   \   0000001E   0x.... 0x....      LDR.W    R4,??DataTable12  ;; 0x4004803c
+   \   00000022   0x6023             STR      R3,[R4, #+0]
+    121                  switch(ch)
+   \   00000024   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000026   0x2900             CMP      R1,#+0
+   \   00000028   0xD00B             BEQ.N    ??FTM_Input_init_4
+   \   0000002A   0x2902             CMP      R1,#+2
+   \   0000002C   0xD025             BEQ.N    ??FTM_Input_init_5
+   \   0000002E   0xD316             BCC.N    ??FTM_Input_init_6
+   \   00000030   0x2904             CMP      R1,#+4
+   \   00000032   0xD03E             BEQ.N    ??FTM_Input_init_7
+   \   00000034   0xD32F             BCC.N    ??FTM_Input_init_8
+   \   00000036   0x2906             CMP      R1,#+6
+   \   00000038   0xD057             BEQ.N    ??FTM_Input_init_9
+   \   0000003A   0xD348             BCC.N    ??FTM_Input_init_10
+   \   0000003C   0x2907             CMP      R1,#+7
+   \   0000003E   0xD062             BEQ.N    ??FTM_Input_init_11
+   \   00000040   0xE06F             B.N      ??FTM_Input_init_12
+    122                  {
+    123                  case CH0:
+    124          
+    125                      SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
+   \                     ??FTM_Input_init_4: (+1)
+   \   00000042   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   00000046   0x681B             LDR      R3,[R3, #+0]
+   \   00000048   0xF453 0x6300      ORRS     R3,R3,#0x800
+   \   0000004C   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   00000050   0x6023             STR      R3,[R4, #+0]
+    126                      PORT_PCR_REG(PORTC_BASE_PTR, 1) = PORT_PCR_MUX(4);  // PTC1
+   \   00000052   0xF44F 0x6380      MOV      R3,#+1024
+   \   00000056   0x.... 0x....      LDR.W    R4,??DataTable12_12  ;; 0x4004b004
+   \   0000005A   0x6023             STR      R3,[R4, #+0]
+    127          
+    128                      break;
+    129          
+    130                  case CH1:
+    131          //            if(FTM0_CH1 == PTC2)
+    132          //            {
+    133                          SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
+    134                          PORT_PCR_REG(PORTC_BASE_PTR, 2) = PORT_PCR_MUX(4);  // PTC2
+    135          //            }
+    136          //            else if(FTM0_CH1 == PTA4)
+    137          //            {
+    138          //                SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    139          //                PORT_PCR_REG(PORTA_BASE_PTR, 4) = PORT_PCR_MUX(3);  // PTA4
+    140          //            }
+    141          
+    142                      break;
+    143          
+    144                  case CH2:
+    145          //            if(FTM0_CH2 == PTC3)
+    146          //            {
+    147                          SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
+    148                          PORT_PCR_REG(PORTC_BASE_PTR, 3) = PORT_PCR_MUX(4);  // PTC3
+    149          //            }
+    150          //            else if(FTM0_CH2 == PTA5)
+    151          //            {
+    152          //                SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    153          //                PORT_PCR_REG(PORTA_BASE_PTR, 5) = PORT_PCR_MUX(3);  // PTA5
+    154          //            }
+    155                      break;
+    156          
+    157                  case CH3:
+    158          //            if(FTM0_CH3 == PTC4)
+    159          //            {
+    160                          SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
+    161                          PORT_PCR_REG(PORTC_BASE_PTR, 4) = PORT_PCR_MUX(4);  // PTC4
+    162          //            }
+    163          //            else if(FTM0_CH3 == PTA6)
+    164          //            {
+    165          //                SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    166          //                PORT_PCR_REG(PORTA_BASE_PTR, 6) = PORT_PCR_MUX(3);  // PTA6
+    167          //            }
+    168          
+    169                      break;
+    170          
+    171                  case CH4:
+    172          //            if(FTM0_CH4 == PTD4)
+    173          //            {
+    174                          SIM_SCGC5 |= SIM_SCGC5_PORTD_MASK;
+    175                          PORT_PCR_REG(PORTD_BASE_PTR, 4) = PORT_PCR_MUX(4);  // PTD4
+    176          //            }
+    177          //            else if(FTM0_CH4 == PTA7)
+    178          //            {
+    179          //                SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    180          //                PORT_PCR_REG(PORTA_BASE_PTR, 7) = PORT_PCR_MUX(3);  // PTA7
+    181          //            }
+    182          
+    183                      break;
+    184          
+    185                  case CH5:
+    186          
+    187                      SIM_SCGC5 |= SIM_SCGC5_PORTD_MASK;
+    188                      PORT_PCR_REG(PORTD_BASE_PTR, 5) = PORT_PCR_MUX(4);  // PTD5
+    189          
+    190                      break;
+    191          
+    192                  case CH6:
+    193          
+    194                      SIM_SCGC5 |= SIM_SCGC5_PORTD_MASK;
+    195                      PORT_PCR_REG(PORTD_BASE_PTR, 6) = PORT_PCR_MUX(4);  // PTD6
+    196          
+    197                      break;
+    198          
+    199                  case CH7:
+    200          
+    201                      SIM_SCGC5 |= SIM_SCGC5_PORTD_MASK;
+    202                      PORT_PCR_REG(PORTD_BASE_PTR, 7) = PORT_PCR_MUX(4);  // PTD7
+    203          
+    204                      break;
+    205                  default:
+    206                      return;
+    207                  }
+    208                  break;
+   \                     ??FTM_Input_init_13: (+1)
+   \   0000005C   0xE0B8             B.N      ??FTM_Input_init_14
+   \                     ??FTM_Input_init_6: (+1)
+   \   0000005E   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   00000062   0x681B             LDR      R3,[R3, #+0]
+   \   00000064   0xF453 0x6300      ORRS     R3,R3,#0x800
+   \   00000068   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   0000006C   0x6023             STR      R3,[R4, #+0]
+   \   0000006E   0xF44F 0x6380      MOV      R3,#+1024
+   \   00000072   0x.... 0x....      LDR.W    R4,??DataTable12_13  ;; 0x4004b008
+   \   00000076   0x6023             STR      R3,[R4, #+0]
+   \   00000078   0xE7F0             B.N      ??FTM_Input_init_13
+   \                     ??FTM_Input_init_5: (+1)
+   \   0000007A   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   0000007E   0x681B             LDR      R3,[R3, #+0]
+   \   00000080   0xF453 0x6300      ORRS     R3,R3,#0x800
+   \   00000084   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   00000088   0x6023             STR      R3,[R4, #+0]
+   \   0000008A   0xF44F 0x6380      MOV      R3,#+1024
+   \   0000008E   0x.... 0x....      LDR.W    R4,??DataTable12_14  ;; 0x4004b00c
+   \   00000092   0x6023             STR      R3,[R4, #+0]
+   \   00000094   0xE7E2             B.N      ??FTM_Input_init_13
+   \                     ??FTM_Input_init_8: (+1)
+   \   00000096   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   0000009A   0x681B             LDR      R3,[R3, #+0]
+   \   0000009C   0xF453 0x6300      ORRS     R3,R3,#0x800
+   \   000000A0   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   000000A4   0x6023             STR      R3,[R4, #+0]
+   \   000000A6   0xF44F 0x6380      MOV      R3,#+1024
+   \   000000AA   0x.... 0x....      LDR.W    R4,??DataTable12_15  ;; 0x4004b010
+   \   000000AE   0x6023             STR      R3,[R4, #+0]
+   \   000000B0   0xE7D4             B.N      ??FTM_Input_init_13
+   \                     ??FTM_Input_init_7: (+1)
+   \   000000B2   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   000000B6   0x681B             LDR      R3,[R3, #+0]
+   \   000000B8   0xF453 0x5380      ORRS     R3,R3,#0x1000
+   \   000000BC   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   000000C0   0x6023             STR      R3,[R4, #+0]
+   \   000000C2   0xF44F 0x6380      MOV      R3,#+1024
+   \   000000C6   0x.... 0x....      LDR.W    R4,??DataTable12_16  ;; 0x4004c010
+   \   000000CA   0x6023             STR      R3,[R4, #+0]
+   \   000000CC   0xE7C6             B.N      ??FTM_Input_init_13
+   \                     ??FTM_Input_init_10: (+1)
+   \   000000CE   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   000000D2   0x681B             LDR      R3,[R3, #+0]
+   \   000000D4   0xF453 0x5380      ORRS     R3,R3,#0x1000
+   \   000000D8   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   000000DC   0x6023             STR      R3,[R4, #+0]
+   \   000000DE   0xF44F 0x6380      MOV      R3,#+1024
+   \   000000E2   0x.... 0x....      LDR.W    R4,??DataTable12_17  ;; 0x4004c014
+   \   000000E6   0x6023             STR      R3,[R4, #+0]
+   \   000000E8   0xE7B8             B.N      ??FTM_Input_init_13
+   \                     ??FTM_Input_init_9: (+1)
+   \   000000EA   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   000000EE   0x681B             LDR      R3,[R3, #+0]
+   \   000000F0   0xF453 0x5380      ORRS     R3,R3,#0x1000
+   \   000000F4   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   000000F8   0x6023             STR      R3,[R4, #+0]
+   \   000000FA   0xF44F 0x6380      MOV      R3,#+1024
+   \   000000FE   0x.... 0x....      LDR.W    R4,??DataTable12_18  ;; 0x4004c018
+   \   00000102   0x6023             STR      R3,[R4, #+0]
+   \   00000104   0xE7AA             B.N      ??FTM_Input_init_13
+   \                     ??FTM_Input_init_11: (+1)
+   \   00000106   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   0000010A   0x681B             LDR      R3,[R3, #+0]
+   \   0000010C   0xF453 0x5380      ORRS     R3,R3,#0x1000
+   \   00000110   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   00000114   0x6023             STR      R3,[R4, #+0]
+   \   00000116   0xF44F 0x6380      MOV      R3,#+1024
+   \   0000011A   0x.... 0x....      LDR.W    R4,??DataTable12_19  ;; 0x4004c01c
+   \   0000011E   0x6023             STR      R3,[R4, #+0]
+   \   00000120   0xE79C             B.N      ??FTM_Input_init_13
+   \                     ??FTM_Input_init_12: (+1)
+   \   00000122   0xE112             B.N      ??FTM_Input_init_15
+    209          
+    210              case FTM1:
+    211                  SIM_SCGC6 |= SIM_SCGC6_FTM1_MASK;                           //使能FTM1时钟
+   \                     ??FTM_Input_init_2: (+1)
+   \   00000124   0x.... 0x....      LDR.W    R3,??DataTable12  ;; 0x4004803c
+   \   00000128   0x681B             LDR      R3,[R3, #+0]
+   \   0000012A   0xF053 0x7300      ORRS     R3,R3,#0x2000000
+   \   0000012E   0x.... 0x....      LDR.W    R4,??DataTable12  ;; 0x4004803c
+   \   00000132   0x6023             STR      R3,[R4, #+0]
+    212                  switch(ch)
+   \   00000134   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000136   0x2900             CMP      R1,#+0
+   \   00000138   0xD002             BEQ.N    ??FTM_Input_init_16
+   \   0000013A   0x2901             CMP      R1,#+1
+   \   0000013C   0xD00E             BEQ.N    ??FTM_Input_init_17
+   \   0000013E   0xE01B             B.N      ??FTM_Input_init_18
+    213                  {
+    214                  case CH0:
+    215          //            if(FTM1_CH0 == PTA8)
+    216          //            {
+    217                          //SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    218                          //PORT_PCR_REG(PORTA_BASE_PTR, 8) = PORT_PCR_MUX(3);  // PTA8
+    219          //            }
+    220          //            else if(FTM1_CH0 == PTA12)
+    221          //            {
+    222          //                SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    223          //                PORT_PCR_REG(PORTA_BASE_PTR, 12) = PORT_PCR_MUX(3);  // PTA12
+    224          //            }
+    225          //            else if(FTM1_CH0 == PTB0)
+    226          //            {
+    227                          SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;
+   \                     ??FTM_Input_init_16: (+1)
+   \   00000140   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   00000144   0x681B             LDR      R3,[R3, #+0]
+   \   00000146   0xF453 0x6380      ORRS     R3,R3,#0x400
+   \   0000014A   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   0000014E   0x6023             STR      R3,[R4, #+0]
+    228                          PORT_PCR_REG(PORTB_BASE_PTR, 0) = PORT_PCR_MUX(3);  // PTB0
+   \   00000150   0xF44F 0x7340      MOV      R3,#+768
+   \   00000154   0x.... 0x....      LDR.W    R4,??DataTable12_20  ;; 0x4004a000
+   \   00000158   0x6023             STR      R3,[R4, #+0]
+    229          //            }
+    230          
+    231                      break;
+    232          
+    233          
+    234                  case CH1:
+    235          //            if(FTM1_CH1 == PTA9)
+    236          //            {
+    237                          SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    238                          PORT_PCR_REG(PORTA_BASE_PTR, 9) = PORT_PCR_MUX(3);  // PTA9
+    239          //            }
+    240          //            else if(FTM1_CH1 == PTA13)
+    241          //            {
+    242          //                SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    243          //                PORT_PCR_REG(PORTA_BASE_PTR, 13) = PORT_PCR_MUX(3);  // PTA13
+    244          //            }
+    245          //            else if(FTM1_CH1 == PTB1)
+    246          //            {
+    247          //                SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;
+    248          //                PORT_PCR_REG(PORTB_BASE_PTR, 1) = PORT_PCR_MUX(3);  // PTB1
+    249          //            }
+    250          
+    251                      break;
+    252          
+    253                  default:
+    254                      return;
+    255                  }
+    256                  break;
+   \                     ??FTM_Input_init_19: (+1)
+   \   0000015A   0xE039             B.N      ??FTM_Input_init_14
+   \                     ??FTM_Input_init_17: (+1)
+   \   0000015C   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   00000160   0x681B             LDR      R3,[R3, #+0]
+   \   00000162   0xF453 0x7300      ORRS     R3,R3,#0x200
+   \   00000166   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   0000016A   0x6023             STR      R3,[R4, #+0]
+   \   0000016C   0xF44F 0x7340      MOV      R3,#+768
+   \   00000170   0x.... 0x....      LDR.W    R4,??DataTable12_21  ;; 0x40049024
+   \   00000174   0x6023             STR      R3,[R4, #+0]
+   \   00000176   0xE7F0             B.N      ??FTM_Input_init_19
+   \                     ??FTM_Input_init_18: (+1)
+   \   00000178   0xE0E7             B.N      ??FTM_Input_init_15
+    257              case FTM2:
+    258                  SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;                           //使能FTM2时钟
+   \                     ??FTM_Input_init_1: (+1)
+   \   0000017A   0x.... 0x....      LDR.W    R3,??DataTable12_7  ;; 0x40048030
+   \   0000017E   0x681B             LDR      R3,[R3, #+0]
+   \   00000180   0xF053 0x7380      ORRS     R3,R3,#0x1000000
+   \   00000184   0x.... 0x....      LDR.W    R4,??DataTable12_7  ;; 0x40048030
+   \   00000188   0x6023             STR      R3,[R4, #+0]
+    259                  switch(ch)
+   \   0000018A   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000018C   0x2900             CMP      R1,#+0
+   \   0000018E   0xD002             BEQ.N    ??FTM_Input_init_20
+   \   00000190   0x2901             CMP      R1,#+1
+   \   00000192   0xD00E             BEQ.N    ??FTM_Input_init_21
+   \   00000194   0xE01B             B.N      ??FTM_Input_init_22
+    260                  {
+    261                  case CH0:
+    262          //            if(FTM2_CH0 == PTA10)
+    263          //            {
+    264                          SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+   \                     ??FTM_Input_init_20: (+1)
+   \   00000196   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   0000019A   0x681B             LDR      R3,[R3, #+0]
+   \   0000019C   0xF453 0x7300      ORRS     R3,R3,#0x200
+   \   000001A0   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   000001A4   0x6023             STR      R3,[R4, #+0]
+    265                          PORT_PCR_REG(PORTA_BASE_PTR, 10) = PORT_PCR_MUX(3);  // PTA10
+   \   000001A6   0xF44F 0x7340      MOV      R3,#+768
+   \   000001AA   0x.... 0x....      LDR.W    R4,??DataTable12_22  ;; 0x40049028
+   \   000001AE   0x6023             STR      R3,[R4, #+0]
+    266          //            }
+    267          //            else if(FTM2_CH0 == PTB18)
+    268          //            {
+    269          //                SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;
+    270          //                PORT_PCR_REG(PORTA_BASE_PTR, 18) = PORT_PCR_MUX(3);  // PTB18
+    271          //            }
+    272          
+    273                      break;
+    274          
+    275                  case CH1:
+    276          //            if(FTM2_CH1 == PTA11)
+    277          //            {
+    278                          SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+    279                          PORT_PCR_REG(PORTA_BASE_PTR, 11) = PORT_PCR_MUX(3);  // PTA11
+    280          //            }
+    281          //            else if(FTM2_CH1 == PTB19)
+    282          //            {
+    283          //                SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;
+    284          //                PORT_PCR_REG(PORTA_BASE_PTR, 19) = PORT_PCR_MUX(3);  // PTB19
+    285          //            }
+    286          
+    287          
+    288                      break;
+    289          
+    290                  default:
+    291                      return;
+    292                  }
+    293                  break;
+   \                     ??FTM_Input_init_23: (+1)
+   \   000001B0   0xE00E             B.N      ??FTM_Input_init_14
+   \                     ??FTM_Input_init_21: (+1)
+   \   000001B2   0x.... 0x....      LDR.W    R3,??DataTable12_11  ;; 0x40048038
+   \   000001B6   0x681B             LDR      R3,[R3, #+0]
+   \   000001B8   0xF453 0x7300      ORRS     R3,R3,#0x200
+   \   000001BC   0x.... 0x....      LDR.W    R4,??DataTable12_11  ;; 0x40048038
+   \   000001C0   0x6023             STR      R3,[R4, #+0]
+   \   000001C2   0xF44F 0x7340      MOV      R3,#+768
+   \   000001C6   0x.... 0x....      LDR.W    R4,??DataTable12_23  ;; 0x4004902c
+   \   000001CA   0x6023             STR      R3,[R4, #+0]
+   \   000001CC   0xE7F0             B.N      ??FTM_Input_init_23
+   \                     ??FTM_Input_init_22: (+1)
+   \   000001CE   0xE0BC             B.N      ??FTM_Input_init_15
+    294              default:
+    295                  break;
+    296              }
+    297          
+    298          
+    299              /******************* 设置为输入捕捉功能 *******************/
+    300              switch(cfg)
+   \                     ??FTM_Input_init_3: (+1)
+   \                     ??FTM_Input_init_14: (+1)
+   \   000001D0   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   000001D2   0x2A00             CMP      R2,#+0
+   \   000001D4   0xD003             BEQ.N    ??FTM_Input_init_24
+   \   000001D6   0x2A02             CMP      R2,#+2
+   \   000001D8   0xD053             BEQ.N    ??FTM_Input_init_25
+   \   000001DA   0xD329             BCC.N    ??FTM_Input_init_26
+   \   000001DC   0xE079             B.N      ??FTM_Input_init_27
+    301              {
+    302              case Rising:    //上升沿触发
+    303                  FTM_CnSC_REG(FTMx[ftmn], ch) |=  ( FTM_CnSC_ELSA_MASK  | FTM_CnSC_CHIE_MASK );                   //置1
+   \                     ??FTM_Input_init_24: (+1)
+   \   000001DE   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   000001E2   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000001E4   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   000001E8   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000001EA   0xEB12 0x02C1      ADDS     R2,R2,R1, LSL #+3
+   \   000001EE   0x.... 0x....      LDR.W    R3,??DataTable12_24
+   \   000001F2   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000001F4   0xF853 0x3020      LDR      R3,[R3, R0, LSL #+2]
+   \   000001F8   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000001FA   0xEB13 0x03C1      ADDS     R3,R3,R1, LSL #+3
+   \   000001FE   0x68DB             LDR      R3,[R3, #+12]
+   \   00000200   0xF053 0x0344      ORRS     R3,R3,#0x44
+   \   00000204   0x60D3             STR      R3,[R2, #+12]
+    304                  FTM_CnSC_REG(FTMx[ftmn], ch) &= ~( FTM_CnSC_ELSB_MASK  | FTM_CnSC_MSB_MASK | FTM_CnSC_MSA_MASK); //清0
+   \   00000206   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   0000020A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000020C   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   00000210   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000212   0xEB12 0x02C1      ADDS     R2,R2,R1, LSL #+3
+   \   00000216   0x.... 0x....      LDR.W    R3,??DataTable12_24
+   \   0000021A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000021C   0xF853 0x3020      LDR      R3,[R3, R0, LSL #+2]
+   \   00000220   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000222   0xEB13 0x01C1      ADDS     R1,R3,R1, LSL #+3
+   \   00000226   0x68C9             LDR      R1,[R1, #+12]
+   \   00000228   0xF031 0x0138      BICS     R1,R1,#0x38
+   \   0000022C   0x60D1             STR      R1,[R2, #+12]
+    305                  break;
+   \   0000022E   0xE050             B.N      ??FTM_Input_init_27
+    306          
+    307              case Falling:   //下降沿触发
+    308                  FTM_CnSC_REG(FTMx[ftmn], ch) |= (FTM_CnSC_ELSB_MASK  | FTM_CnSC_CHIE_MASK );                    //置1
+   \                     ??FTM_Input_init_26: (+1)
+   \   00000230   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   00000234   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000236   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   0000023A   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000023C   0xEB12 0x02C1      ADDS     R2,R2,R1, LSL #+3
+   \   00000240   0x.... 0x....      LDR.W    R3,??DataTable12_24
+   \   00000244   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000246   0xF853 0x3020      LDR      R3,[R3, R0, LSL #+2]
+   \   0000024A   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000024C   0xEB13 0x03C1      ADDS     R3,R3,R1, LSL #+3
+   \   00000250   0x68DB             LDR      R3,[R3, #+12]
+   \   00000252   0xF053 0x0348      ORRS     R3,R3,#0x48
+   \   00000256   0x60D3             STR      R3,[R2, #+12]
+    309                  FTM_CnSC_REG(FTMx[ftmn], ch) &= ~( FTM_CnSC_ELSA_MASK | FTM_CnSC_MSB_MASK | FTM_CnSC_MSA_MASK); //清0
+   \   00000258   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   0000025C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000025E   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   00000262   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000264   0xEB12 0x02C1      ADDS     R2,R2,R1, LSL #+3
+   \   00000268   0x.... 0x....      LDR.W    R3,??DataTable12_24
+   \   0000026C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000026E   0xF853 0x3020      LDR      R3,[R3, R0, LSL #+2]
+   \   00000272   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000274   0xEB13 0x01C1      ADDS     R1,R3,R1, LSL #+3
+   \   00000278   0x68C9             LDR      R1,[R1, #+12]
+   \   0000027A   0xF031 0x0134      BICS     R1,R1,#0x34
+   \   0000027E   0x60D1             STR      R1,[R2, #+12]
+    310                  break;
+   \   00000280   0xE027             B.N      ??FTM_Input_init_27
+    311          
+    312              case Rising_or_Falling: //上升沿、下降沿都触发
+    313                  FTM_CnSC_REG(FTMx[ftmn], ch) |=  ( FTM_CnSC_ELSB_MASK | FTM_CnSC_ELSA_MASK  | FTM_CnSC_CHIE_MASK ); //置1
+   \                     ??FTM_Input_init_25: (+1)
+   \   00000282   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   00000286   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000288   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   0000028C   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000028E   0xEB12 0x02C1      ADDS     R2,R2,R1, LSL #+3
+   \   00000292   0x.... 0x....      LDR.W    R3,??DataTable12_24
+   \   00000296   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000298   0xF853 0x3020      LDR      R3,[R3, R0, LSL #+2]
+   \   0000029C   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000029E   0xEB13 0x03C1      ADDS     R3,R3,R1, LSL #+3
+   \   000002A2   0x68DB             LDR      R3,[R3, #+12]
+   \   000002A4   0xF053 0x034C      ORRS     R3,R3,#0x4C
+   \   000002A8   0x60D3             STR      R3,[R2, #+12]
+    314                  FTM_CnSC_REG(FTMx[ftmn], ch) &= ~( FTM_CnSC_MSB_MASK  | FTM_CnSC_MSA_MASK); //清0
+   \   000002AA   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   000002AE   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000002B0   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   000002B4   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000002B6   0xEB12 0x02C1      ADDS     R2,R2,R1, LSL #+3
+   \   000002BA   0x.... 0x....      LDR.W    R3,??DataTable12_24
+   \   000002BE   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000002C0   0xF853 0x3020      LDR      R3,[R3, R0, LSL #+2]
+   \   000002C4   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000002C6   0xEB13 0x01C1      ADDS     R1,R3,R1, LSL #+3
+   \   000002CA   0x68C9             LDR      R1,[R1, #+12]
+   \   000002CC   0xF031 0x0130      BICS     R1,R1,#0x30
+   \   000002D0   0x60D1             STR      R1,[R2, #+12]
+    315                  break;
+    316              }
+    317          
+    318              FTM_SC_REG(FTMx[ftmn]) = FTM_SC_CLKS(0x1);       //System clock
+   \                     ??FTM_Input_init_27: (+1)
+   \   000002D2   0x2108             MOVS     R1,#+8
+   \   000002D4   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   000002D8   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000002DA   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   000002DE   0x6011             STR      R1,[R2, #+0]
+    319          
+    320              FTM_MODE_REG(FTMx[ftmn]) |= FTM_MODE_WPDIS_MASK;
+   \   000002E0   0x.... 0x....      LDR.W    R1,??DataTable12_24
+   \   000002E4   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000002E6   0xF851 0x1020      LDR      R1,[R1, R0, LSL #+2]
+   \   000002EA   0x6D49             LDR      R1,[R1, #+84]
+   \   000002EC   0xF051 0x0104      ORRS     R1,R1,#0x4
+   \   000002F0   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   000002F4   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000002F6   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   000002FA   0x6551             STR      R1,[R2, #+84]
+    321              FTM_COMBINE_REG(FTMx[ftmn]) = 0;
+   \   000002FC   0x2100             MOVS     R1,#+0
+   \   000002FE   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   00000302   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000304   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   00000308   0x6651             STR      R1,[R2, #+100]
+    322              FTM_MODE_REG(FTMx[ftmn]) &= ~FTM_MODE_FTMEN_MASK;
+   \   0000030A   0x.... 0x....      LDR.W    R1,??DataTable12_24
+   \   0000030E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000310   0xF851 0x1020      LDR      R1,[R1, R0, LSL #+2]
+   \   00000314   0x6D49             LDR      R1,[R1, #+84]
+   \   00000316   0x0849             LSRS     R1,R1,#+1
+   \   00000318   0x0049             LSLS     R1,R1,#+1
+   \   0000031A   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   0000031E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000320   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   00000324   0x6551             STR      R1,[R2, #+84]
+    323              FTM_CNTIN_REG(FTMx[ftmn]) = 0;
+   \   00000326   0x2100             MOVS     R1,#+0
+   \   00000328   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   0000032C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000032E   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   00000332   0x64D1             STR      R1,[R2, #+76]
+    324          
+    325              FTM_STATUS_REG(FTMx[ftmn]) = 0x00;               //清中断标志位
+   \   00000334   0x2100             MOVS     R1,#+0
+   \   00000336   0x.... 0x....      LDR.W    R2,??DataTable12_24
+   \   0000033A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000033C   0xF852 0x2020      LDR      R2,[R2, R0, LSL #+2]
+   \   00000340   0x6511             STR      R1,[R2, #+80]
+    326          
+    327              //开启输入捕捉中断
+    328              enable_irq(78 - 16 + ftmn);
+   \   00000342   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000344   0x303E             ADDS     R0,R0,#+62
+   \   00000346   0x.... 0x....      BL       enable_irq
+    329          }
+   \                     ??FTM_Input_init_15: (+1)
+   \   0000034A   0xBD10             POP      {R4,PC}          ;; return
+    330          
+    331          
+    332          /********************************************************************************************************************/
+    333          /*    PWM                                                                                                           */
+    334          /*                                                                                                                  */
+    335          /********************************************************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    336          void PWM_Init(void)
+    337          {
+    338            
+    339              /* config port for FTM:  */
+    340              //PORTA_PCR8 = PORT_PCR_MUX(0x3) | PORT_PCR_DSE_MASK; //高驱动强度
+    341              PORTD_PCR6 = PORT_PCR_MUX(0x4)| PORT_PCR_DSE_MASK;  //FTM0_CH6    PTD6   右轮
+   \                     PWM_Init: (+1)
+   \   00000000   0xF44F 0x6088      MOV      R0,#+1088
+   \   00000004   0x.... 0x....      LDR.W    R1,??DataTable12_18  ;; 0x4004c018
+   \   00000008   0x6008             STR      R0,[R1, #+0]
+    342              PORTD_PCR7 = PORT_PCR_MUX(0x4)| PORT_PCR_DSE_MASK;  //FTM0_CH7    PTD7   右轮
+   \   0000000A   0xF44F 0x6088      MOV      R0,#+1088
+   \   0000000E   0x.... 0x....      LDR.W    R1,??DataTable12_19  ;; 0x4004c01c
+   \   00000012   0x6008             STR      R0,[R1, #+0]
+    343              PORTD_PCR4 = PORT_PCR_MUX(0x4)| PORT_PCR_DSE_MASK;  //FTM0_CH4    PTD4   左轮
+   \   00000014   0xF44F 0x6088      MOV      R0,#+1088
+   \   00000018   0x.... 0x....      LDR.W    R1,??DataTable12_16  ;; 0x4004c010
+   \   0000001C   0x6008             STR      R0,[R1, #+0]
+    344              PORTD_PCR5 = PORT_PCR_MUX(0x4)| PORT_PCR_DSE_MASK;  //FTM0_CH5    PTD5   左轮  
+   \   0000001E   0xF44F 0x6088      MOV      R0,#+1088
+   \   00000022   0x.... 0x....      LDR.W    R1,??DataTable12_17  ;; 0x4004c014
+   \   00000026   0x6008             STR      R0,[R1, #+0]
+    345            
+    346            
+    347            
+    348              /* FTM1 clock enable:*/
+    349              //SIM_SCGC6|=SIM_SCGC6_FTM1_MASK;
+    350              SIM_SCGC6 |= SIM_SCGC6_FTM0_MASK;
+   \   00000028   0x.... 0x....      LDR.W    R0,??DataTable12  ;; 0x4004803c
+   \   0000002C   0x6800             LDR      R0,[R0, #+0]
+   \   0000002E   0xF050 0x7080      ORRS     R0,R0,#0x1000000
+   \   00000032   0x.... 0x....      LDR.W    R1,??DataTable12  ;; 0x4004803c
+   \   00000036   0x6008             STR      R0,[R1, #+0]
+    351              
+    352              //FTM1_SC |= (FTM_SC_CLKS(1)           // CLKS=1:System clock
+    353              //           |FTM_SC_PS(7));           // 48MHz/128=375KHz
+    354              FTM0_SC = 0x08; //设置无中断、向下计数及分频因子为1；
+   \   00000038   0x2008             MOVS     R0,#+8
+   \   0000003A   0x.... 0x....      LDR.W    R1,??DataTable12_3  ;; 0x40038000
+   \   0000003E   0x6008             STR      R0,[R1, #+0]
+    355                                //边沿触发模式
+    356                                //PMW频率=X系统频率/(2^FTM0_SC_PS)/FTM0_MOD
+    357              
+    358              
+    359              //FTM1_C0SC |= (FTM_CnSC_MSB_MASK      // MSB=1:Edge-aligned PWM
+    360              //             |FTM_CnSC_ELSA_MASK);   // ELSA=1:Low first    占空比为低电平
+    361              
+    362              FTM0_C4SC |= FTM_CnSC_ELSB_MASK;                          
+   \   00000040   0x.... 0x....      LDR.W    R0,??DataTable12_25  ;; 0x4003802c
+   \   00000044   0x6800             LDR      R0,[R0, #+0]
+   \   00000046   0xF050 0x0008      ORRS     R0,R0,#0x8
+   \   0000004A   0x.... 0x....      LDR.W    R1,??DataTable12_25  ;; 0x4003802c
+   \   0000004E   0x6008             STR      R0,[R1, #+0]
+    363              FTM0_C4SC &= ~FTM_CnSC_ELSA_MASK;                         
+   \   00000050   0x.... 0x....      LDR.W    R0,??DataTable12_25  ;; 0x4003802c
+   \   00000054   0x6800             LDR      R0,[R0, #+0]
+   \   00000056   0xF030 0x0004      BICS     R0,R0,#0x4
+   \   0000005A   0x.... 0x....      LDR.W    R1,??DataTable12_25  ;; 0x4003802c
+   \   0000005E   0x6008             STR      R0,[R1, #+0]
+    364              FTM0_C4SC |= FTM_CnSC_MSB_MASK;                         
+   \   00000060   0x.... 0x....      LDR.W    R0,??DataTable12_25  ;; 0x4003802c
+   \   00000064   0x6800             LDR      R0,[R0, #+0]
+   \   00000066   0xF050 0x0020      ORRS     R0,R0,#0x20
+   \   0000006A   0x.... 0x....      LDR.W    R1,??DataTable12_25  ;; 0x4003802c
+   \   0000006E   0x6008             STR      R0,[R1, #+0]
+    365                
+    366              FTM0_C5SC |= FTM_CnSC_ELSB_MASK;                         
+   \   00000070   0x.... 0x....      LDR.W    R0,??DataTable12_26  ;; 0x40038034
+   \   00000074   0x6800             LDR      R0,[R0, #+0]
+   \   00000076   0xF050 0x0008      ORRS     R0,R0,#0x8
+   \   0000007A   0x.... 0x....      LDR.W    R1,??DataTable12_26  ;; 0x40038034
+   \   0000007E   0x6008             STR      R0,[R1, #+0]
+    367              FTM0_C5SC &= ~FTM_CnSC_ELSA_MASK;                        
+   \   00000080   0x.... 0x....      LDR.W    R0,??DataTable12_26  ;; 0x40038034
+   \   00000084   0x6800             LDR      R0,[R0, #+0]
+   \   00000086   0xF030 0x0004      BICS     R0,R0,#0x4
+   \   0000008A   0x.... 0x....      LDR.W    R1,??DataTable12_26  ;; 0x40038034
+   \   0000008E   0x6008             STR      R0,[R1, #+0]
+    368              FTM0_C5SC |= FTM_CnSC_MSB_MASK;     
+   \   00000090   0x.... 0x....      LDR.W    R0,??DataTable12_26  ;; 0x40038034
+   \   00000094   0x6800             LDR      R0,[R0, #+0]
+   \   00000096   0xF050 0x0020      ORRS     R0,R0,#0x20
+   \   0000009A   0x.... 0x....      LDR.W    R1,??DataTable12_26  ;; 0x40038034
+   \   0000009E   0x6008             STR      R0,[R1, #+0]
+    369                
+    370                 /**/
+    371               
+    372              FTM0_C6SC |= FTM_CnSC_ELSB_MASK;
+   \   000000A0   0x.... 0x....      LDR.W    R0,??DataTable12_27  ;; 0x4003803c
+   \   000000A4   0x6800             LDR      R0,[R0, #+0]
+   \   000000A6   0xF050 0x0008      ORRS     R0,R0,#0x8
+   \   000000AA   0x.... 0x....      LDR.W    R1,??DataTable12_27  ;; 0x4003803c
+   \   000000AE   0x6008             STR      R0,[R1, #+0]
+    373              FTM0_C6SC &= ~FTM_CnSC_ELSA_MASK;
+   \   000000B0   0x.... 0x....      LDR.W    R0,??DataTable12_27  ;; 0x4003803c
+   \   000000B4   0x6800             LDR      R0,[R0, #+0]
+   \   000000B6   0xF030 0x0004      BICS     R0,R0,#0x4
+   \   000000BA   0x.... 0x....      LDR.W    R1,??DataTable12_27  ;; 0x4003803c
+   \   000000BE   0x6008             STR      R0,[R1, #+0]
+    374              FTM0_C6SC |= FTM_CnSC_MSB_MASK;     
+   \   000000C0   0x.... 0x....      LDR.W    R0,??DataTable12_27  ;; 0x4003803c
+   \   000000C4   0x6800             LDR      R0,[R0, #+0]
+   \   000000C6   0xF050 0x0020      ORRS     R0,R0,#0x20
+   \   000000CA   0x.... 0x....      LDR.W    R1,??DataTable12_27  ;; 0x4003803c
+   \   000000CE   0x6008             STR      R0,[R1, #+0]
+    375                
+    376              FTM0_C7SC |= FTM_CnSC_ELSB_MASK;
+   \   000000D0   0x.... 0x....      LDR.W    R0,??DataTable12_28  ;; 0x40038044
+   \   000000D4   0x6800             LDR      R0,[R0, #+0]
+   \   000000D6   0xF050 0x0008      ORRS     R0,R0,#0x8
+   \   000000DA   0x.... 0x....      LDR.W    R1,??DataTable12_28  ;; 0x40038044
+   \   000000DE   0x6008             STR      R0,[R1, #+0]
+    377              FTM0_C7SC &= ~FTM_CnSC_ELSA_MASK;
+   \   000000E0   0x.... 0x....      LDR.W    R0,??DataTable12_28  ;; 0x40038044
+   \   000000E4   0x6800             LDR      R0,[R0, #+0]
+   \   000000E6   0xF030 0x0004      BICS     R0,R0,#0x4
+   \   000000EA   0x.... 0x....      LDR.W    R1,??DataTable12_28  ;; 0x40038044
+   \   000000EE   0x6008             STR      R0,[R1, #+0]
+    378              FTM0_C7SC |= FTM_CnSC_MSB_MASK; 
+   \   000000F0   0x.... 0x....      LDR.W    R0,??DataTable12_28  ;; 0x40038044
+   \   000000F4   0x6800             LDR      R0,[R0, #+0]
+   \   000000F6   0xF050 0x0020      ORRS     R0,R0,#0x20
+   \   000000FA   0x.... 0x....      LDR.W    R1,??DataTable12_28  ;; 0x40038044
+   \   000000FE   0x6008             STR      R0,[R1, #+0]
+    379              
+    380              
+    381              
+    382              FTM0_MODE |= FTM_MODE_WPDIS_MASK;      //BIT1   Initialize the Channels Output
+   \   00000100   0x.... 0x....      LDR.W    R0,??DataTable12_29  ;; 0x40038054
+   \   00000104   0x6800             LDR      R0,[R0, #+0]
+   \   00000106   0xF050 0x0004      ORRS     R0,R0,#0x4
+   \   0000010A   0x.... 0x....      LDR.W    R1,??DataTable12_29  ;; 0x40038054
+   \   0000010E   0x6008             STR      R0,[R1, #+0]
+    383             
+    384              FTM0_MODE &= ~1;           //BIT0   FTM Enable
+   \   00000110   0x.... 0x....      LDR.W    R0,??DataTable12_29  ;; 0x40038054
+   \   00000114   0x6800             LDR      R0,[R0, #+0]
+   \   00000116   0x0840             LSRS     R0,R0,#+1
+   \   00000118   0x0040             LSLS     R0,R0,#+1
+   \   0000011A   0x.... 0x....      LDR.W    R1,??DataTable12_29  ;; 0x40038054
+   \   0000011E   0x6008             STR      R0,[R1, #+0]
+    385              
+    386          //    FTM1_C0SC |= (FTM_CnSC_MSB_MASK      // MSB=1:Edge-aligned PWM
+    387          //                 |FTM_CnSC_ELSB_MASK);    //占空比为高电平
+    388          //    FTM1_C0SC &= ~FTM_CnSC_ELSA_MASK;
+    389              
+    390              //FTM1_OUTMASK = 0XFE;                 // Ch1-7 output is masked except ch0 屏蔽其他
+    391              
+    392              /* set PWM frequence: */
+    393              FTM0_COMBINE=0;      //  双边沿捕捉禁止，COMBINE=0，不级联
+   \   00000120   0x2000             MOVS     R0,#+0
+   \   00000122   0x.... 0x....      LDR.W    R1,??DataTable12_30  ;; 0x40038064
+   \   00000126   0x6008             STR      R0,[R1, #+0]
+    394              FTM0_OUTINIT=0;
+   \   00000128   0x2000             MOVS     R0,#+0
+   \   0000012A   0x.... 0x....      LDR.W    R1,??DataTable12_31  ;; 0x4003805c
+   \   0000012E   0x6008             STR      R0,[R1, #+0]
+    395              FTM0_EXTTRIG=0;      //FTM External Trigger (FTMx_EXTTRIG)
+   \   00000130   0x2000             MOVS     R0,#+0
+   \   00000132   0x.... 0x....      LDR.W    R1,??DataTable12_32  ;; 0x4003806c
+   \   00000136   0x6008             STR      R0,[R1, #+0]
+    396              FTM0_POL=0;          //Channels Polarity (FTMx_POL)
+   \   00000138   0x2000             MOVS     R0,#+0
+   \   0000013A   0x.... 0x....      LDR.W    R1,??DataTable12_33  ;; 0x40038070
+   \   0000013E   0x6008             STR      R0,[R1, #+0]
+    397                                     //0 The channel polarity is active high.
+    398                                     //1 The channel polarity is active low.     
+    399                //Set Edge Aligned PWM
+    400              FTM0_QDCTRL &=~FTM_QDCTRL_QUADEN_MASK;     //不使能正交编码功能
+   \   00000140   0x.... 0x....      LDR.W    R0,??DataTable12_34  ;; 0x40038080
+   \   00000144   0x6800             LDR      R0,[R0, #+0]
+   \   00000146   0x0840             LSRS     R0,R0,#+1
+   \   00000148   0x0040             LSLS     R0,R0,#+1
+   \   0000014A   0x.... 0x....      LDR.W    R1,??DataTable12_34  ;; 0x40038080
+   \   0000014E   0x6008             STR      R0,[R1, #+0]
+    401              FTM0_INVCTRL=0;      //反转控制
+   \   00000150   0x2000             MOVS     R0,#+0
+   \   00000152   0x.... 0x....      LDR.W    R1,??DataTable12_35  ;; 0x40038090
+   \   00000156   0x6008             STR      R0,[R1, #+0]
+    402              FTM0_SWOCTRL=0;      //软件输出控制F TM Software Output Control (FTMx_SWOCTRL)
+   \   00000158   0x2000             MOVS     R0,#+0
+   \   0000015A   0x.... 0x....      LDR.W    R1,??DataTable12_36  ;; 0x40038094
+   \   0000015E   0x6008             STR      R0,[R1, #+0]
+    403              FTM0_PWMLOAD=0;      //FTM PWM Load
+   \   00000160   0x2000             MOVS     R0,#+0
+   \   00000162   0x.... 0x....      LDR.W    R1,??DataTable12_37  ;; 0x40038098
+   \   00000166   0x6008             STR      R0,[R1, #+0]
+    404                                     //BIT9: 0 Loading updated values is disabled.
+    405                                     //1 Loading updated values is enabled.
+    406              FTM0_CNTIN=0;        //Counter Initial Value      FTM0计数器初始值为0 
+   \   00000168   0x2000             MOVS     R0,#+0
+   \   0000016A   0x.... 0x....      LDR.W    R1,??DataTable12_2  ;; 0x4003804c
+   \   0000016E   0x6008             STR      R0,[R1, #+0]
+    407              FTM0_MOD=15000;       //Modulo value,The EPWM period is determined by (MOD - CNTIN + 0x0001)  结束值，周期为（MOD-CNTIN+1）*时钟周期=10ms
+   \   00000170   0xF643 0x2098      MOVW     R0,#+15000
+   \   00000174   0x.... 0x....      LDR.W    R1,??DataTable12_1  ;; 0x40038008
+   \   00000178   0x6008             STR      R0,[R1, #+0]
+    408              
+    409              FTM0_C6V=0;                   //右轮反转
+   \   0000017A   0x2000             MOVS     R0,#+0
+   \   0000017C   0x.... 0x....      LDR.W    R1,??DataTable12_38  ;; 0x40038040
+   \   00000180   0x6008             STR      R0,[R1, #+0]
+    410              FTM0_C7V=0;                   //右轮正转    
+   \   00000182   0x2000             MOVS     R0,#+0
+   \   00000184   0x.... 0x....      LDR.W    R1,??DataTable12_39  ;; 0x40038048
+   \   00000188   0x6008             STR      R0,[R1, #+0]
+    411              FTM0_C4V=0;                   //左轮正转                 正、反转死区300左右
+   \   0000018A   0x2000             MOVS     R0,#+0
+   \   0000018C   0x.... 0x....      LDR.W    R1,??DataTable12_40  ;; 0x40038030
+   \   00000190   0x6008             STR      R0,[R1, #+0]
+    412              FTM0_C5V=0;                   //左轮反转               
+   \   00000192   0x2000             MOVS     R0,#+0
+   \   00000194   0x.... 0x....      LDR.W    R1,??DataTable12_41  ;; 0x40038038
+   \   00000198   0x6008             STR      R0,[R1, #+0]
+    413              
+    414              
+    415              //FTM1_CNTIN = 0;
+    416              //FTM1_MOD   = 374;                    // f=375KHz/(MOD - CNTIN + 1)=1KHz
+    417              
+    418              //FTM1_C0V   = 0;                      // 0% for initiation
+    419          
+    420          }
+   \   0000019A   0x4770             BX       LR               ;; return
+    421          
+    422          
+    423          
+    424          /********************************************************************************************************************/
+    425          /*    PWM    中心对奇                                                                                               */
+    426          /*                                                                                                                  */
+    427          /********************************************************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    428          void CPWM_INIT(void)
+    429          {
+    430              PORTA_PCR8 = PORT_PCR_MUX(0x3) | PORT_PCR_DSE_MASK;
+   \                     CPWM_INIT: (+1)
+   \   00000000   0xF44F 0x7050      MOV      R0,#+832
+   \   00000004   0x.... 0x....      LDR.W    R1,??DataTable12_42  ;; 0x40049020
+   \   00000008   0x6008             STR      R0,[R1, #+0]
+    431              SIM_SCGC6|=SIM_SCGC6_FTM1_MASK;
+   \   0000000A   0x.... 0x....      LDR.W    R0,??DataTable12  ;; 0x4004803c
+   \   0000000E   0x6800             LDR      R0,[R0, #+0]
+   \   00000010   0xF050 0x7000      ORRS     R0,R0,#0x2000000
+   \   00000014   0x.... 0x....      LDR.W    R1,??DataTable12  ;; 0x4004803c
+   \   00000018   0x6008             STR      R0,[R1, #+0]
+    432              FTM1_SC |= FTM_SC_CPWMS_MASK;          //CPWM
+   \   0000001A   0x.... 0x....      LDR.W    R0,??DataTable12_6  ;; 0x40039000
+   \   0000001E   0x6800             LDR      R0,[R0, #+0]
+   \   00000020   0xF050 0x0020      ORRS     R0,R0,#0x20
+   \   00000024   0x.... 0x....      LDR.W    R1,??DataTable12_6  ;; 0x40039000
+   \   00000028   0x6008             STR      R0,[R1, #+0]
+    433              FTM1_SC |= (FTM_SC_CLKS(1)           // CLKS=1:System clock
+    434                         |FTM_SC_PS(7)); 
+   \   0000002A   0x.... 0x....      LDR.W    R0,??DataTable12_6  ;; 0x40039000
+   \   0000002E   0x6800             LDR      R0,[R0, #+0]
+   \   00000030   0xF050 0x000F      ORRS     R0,R0,#0xF
+   \   00000034   0x.... 0x....      LDR.W    R1,??DataTable12_6  ;; 0x40039000
+   \   00000038   0x6008             STR      R0,[R1, #+0]
+    435              FTM1_C0SC |= FTM_CnSC_ELSA_MASK;    //低高低
+   \   0000003A   0x.... 0x....      LDR.W    R0,??DataTable12_43  ;; 0x4003900c
+   \   0000003E   0x6800             LDR      R0,[R0, #+0]
+   \   00000040   0xF050 0x0004      ORRS     R0,R0,#0x4
+   \   00000044   0x.... 0x....      LDR.W    R1,??DataTable12_43  ;; 0x4003900c
+   \   00000048   0x6008             STR      R0,[R1, #+0]
+    436              FTM1_OUTMASK = 0XFE;
+   \   0000004A   0x20FE             MOVS     R0,#+254
+   \   0000004C   0x.... 0x....      LDR.W    R1,??DataTable12_44  ;; 0x40039060
+   \   00000050   0x6008             STR      R0,[R1, #+0]
+    437              FTM1_CNTIN = 0;
+   \   00000052   0x2000             MOVS     R0,#+0
+   \   00000054   0x.... 0x....      LDR.W    R1,??DataTable12_5  ;; 0x4003904c
+   \   00000058   0x6008             STR      R0,[R1, #+0]
+    438              FTM1_MOD   = 374; 
+   \   0000005A   0xF44F 0x70BB      MOV      R0,#+374
+   \   0000005E   0x.... 0x....      LDR.W    R1,??DataTable12_4  ;; 0x40039008
+   \   00000062   0x6008             STR      R0,[R1, #+0]
+    439              FTM1_C0V   = 0;
+   \   00000064   0x2000             MOVS     R0,#+0
+   \   00000066   0x.... 0x....      LDR.W    R1,??DataTable12_45  ;; 0x40039010
+   \   0000006A   0x6008             STR      R0,[R1, #+0]
+    440              
+    441              
+    442          }
+   \   0000006C   0x4770             BX       LR               ;; return
+    443          
+    444          
+    445          /********************************************************************************************************************/
+    446          /*    PWM    互补输出带死区                                                                                         */
+    447          /*                                                                                                                  */
+    448          /********************************************************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    449          void CPWM_COMBINE_INIT(void)
+    450          {
+    451              PORTA_PCR8 = PORT_PCR_MUX(0x3) | PORT_PCR_DSE_MASK;
+   \                     CPWM_COMBINE_INIT: (+1)
+   \   00000000   0xF44F 0x7050      MOV      R0,#+832
+   \   00000004   0x.... 0x....      LDR.W    R1,??DataTable12_42  ;; 0x40049020
+   \   00000008   0x6008             STR      R0,[R1, #+0]
+    452              PORTA_PCR9 = PORT_PCR_MUX(0x3) | PORT_PCR_DSE_MASK;
+   \   0000000A   0xF44F 0x7050      MOV      R0,#+832
+   \   0000000E   0x.... 0x....      LDR.W    R1,??DataTable12_21  ;; 0x40049024
+   \   00000012   0x6008             STR      R0,[R1, #+0]
+    453              SIM_SCGC6|=SIM_SCGC6_FTM1_MASK;
+   \   00000014   0x.... 0x....      LDR.W    R0,??DataTable12  ;; 0x4004803c
+   \   00000018   0x6800             LDR      R0,[R0, #+0]
+   \   0000001A   0xF050 0x7000      ORRS     R0,R0,#0x2000000
+   \   0000001E   0x.... 0x....      LDR.W    R1,??DataTable12  ;; 0x4004803c
+   \   00000022   0x6008             STR      R0,[R1, #+0]
+    454              FTM1_SC = 0;
+   \   00000024   0x2000             MOVS     R0,#+0
+   \   00000026   0x.... 0x....      LDR.W    R1,??DataTable12_6  ;; 0x40039000
+   \   0000002A   0x6008             STR      R0,[R1, #+0]
+    455              //FTM1_SC |= FTM_SC_CPWMS_MASK;       //CPWM
+    456              FTM1_SC |= (FTM_SC_CLKS(1)           // CLKS=1:System clock
+    457                         |FTM_SC_PS(7));
+   \   0000002C   0x.... 0x....      LDR.W    R0,??DataTable12_6  ;; 0x40039000
+   \   00000030   0x6800             LDR      R0,[R0, #+0]
+   \   00000032   0xF050 0x000F      ORRS     R0,R0,#0xF
+   \   00000036   0x.... 0x....      LDR.W    R1,??DataTable12_6  ;; 0x40039000
+   \   0000003A   0x6008             STR      R0,[R1, #+0]
+    458              FTM1_MODE |= FTM_MODE_WPDIS_MASK;//写保护禁止
+   \   0000003C   0x.... 0x....      LDR.W    R0,??DataTable12_46  ;; 0x40039054
+   \   00000040   0x6800             LDR      R0,[R0, #+0]
+   \   00000042   0xF050 0x0004      ORRS     R0,R0,#0x4
+   \   00000046   0x.... 0x....      LDR.W    R1,??DataTable12_46  ;; 0x40039054
+   \   0000004A   0x6008             STR      R0,[R1, #+0]
+    459              FTM1_MODE |=FTM_MODE_FTMEN_MASK;//FTMEN=1
+   \   0000004C   0x.... 0x....      LDR.W    R0,??DataTable12_46  ;; 0x40039054
+   \   00000050   0x6800             LDR      R0,[R0, #+0]
+   \   00000052   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000056   0x.... 0x....      LDR.W    R1,??DataTable12_46  ;; 0x40039054
+   \   0000005A   0x6008             STR      R0,[R1, #+0]
+    460              FTM1_QDCTRL &= ~FTM_QDCTRL_QUADEN_MASK;//禁止正交解码模式
+   \   0000005C   0x.... 0x....      LDR.W    R0,??DataTable12_47  ;; 0x40039080
+   \   00000060   0x6800             LDR      R0,[R0, #+0]
+   \   00000062   0x0840             LSRS     R0,R0,#+1
+   \   00000064   0x0040             LSLS     R0,R0,#+1
+   \   00000066   0x.... 0x....      LDR.W    R1,??DataTable12_47  ;; 0x40039080
+   \   0000006A   0x6008             STR      R0,[R1, #+0]
+    461              FTM1_COMBINE |= FTM_COMBINE_COMBINE0_MASK;//FTM1通道0,1联合使用
+   \   0000006C   0x.... 0x....      LDR.W    R0,??DataTable12_48  ;; 0x40039064
+   \   00000070   0x6800             LDR      R0,[R0, #+0]
+   \   00000072   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000076   0x.... 0x....      LDR.W    R1,??DataTable12_48  ;; 0x40039064
+   \   0000007A   0x6008             STR      R0,[R1, #+0]
+    462              FTM1_COMBINE |= FTM_COMBINE_COMP0_MASK;//FTM1通道0,1互补输出
+   \   0000007C   0x.... 0x....      LDR.W    R0,??DataTable12_48  ;; 0x40039064
+   \   00000080   0x6800             LDR      R0,[R0, #+0]
+   \   00000082   0xF050 0x0002      ORRS     R0,R0,#0x2
+   \   00000086   0x.... 0x....      LDR.W    R1,??DataTable12_48  ;; 0x40039064
+   \   0000008A   0x6008             STR      R0,[R1, #+0]
+    463              FTM1_COMBINE |= FTM_COMBINE_SYNCEN0_MASK;//使能FTM1通道0,1 PWM同步
+   \   0000008C   0x.... 0x....      LDR.W    R0,??DataTable12_48  ;; 0x40039064
+   \   00000090   0x6800             LDR      R0,[R0, #+0]
+   \   00000092   0xF050 0x0020      ORRS     R0,R0,#0x20
+   \   00000096   0x.... 0x....      LDR.W    R1,??DataTable12_48  ;; 0x40039064
+   \   0000009A   0x6008             STR      R0,[R1, #+0]
+    464              FTM1_COMBINE |= FTM_COMBINE_DTEN0_MASK;//死区插入
+   \   0000009C   0x.... 0x....      LDR.W    R0,??DataTable12_48  ;; 0x40039064
+   \   000000A0   0x6800             LDR      R0,[R0, #+0]
+   \   000000A2   0xF050 0x0010      ORRS     R0,R0,#0x10
+   \   000000A6   0x.... 0x....      LDR.W    R1,??DataTable12_48  ;; 0x40039064
+   \   000000AA   0x6008             STR      R0,[R1, #+0]
+    465              FTM1_DEADTIME = FTM_DEADTIME_DTPS(3)|FTM_DEADTIME_DTVAL(6);     //16分频 （0x 1；10 4；11 16）   6个周期  =2us  48M/16
+   \   000000AC   0x20C6             MOVS     R0,#+198
+   \   000000AE   0x.... 0x....      LDR.W    R1,??DataTable12_49  ;; 0x40039068
+   \   000000B2   0x6008             STR      R0,[R1, #+0]
+    466              FTM1_SYNCONF|=FTM_SYNCONF_SWWRBUF_MASK;//使能MOD,CNTIN,CV寄存器的软件触发同步
+   \   000000B4   0x.... 0x....      LDR.W    R0,??DataTable12_50  ;; 0x4003908c
+   \   000000B8   0x6800             LDR      R0,[R0, #+0]
+   \   000000BA   0xF450 0x7000      ORRS     R0,R0,#0x200
+   \   000000BE   0x.... 0x....      LDR.W    R1,??DataTable12_50  ;; 0x4003908c
+   \   000000C2   0x6008             STR      R0,[R1, #+0]
+    467              FTM1_SYNC=FTM_SYNC_CNTMIN_MASK|FTM_SYNC_CNTMAX_MASK;//设置load point
+   \   000000C4   0x2003             MOVS     R0,#+3
+   \   000000C6   0x.... 0x....      LDR.W    R1,??DataTable12_51  ;; 0x40039058
+   \   000000CA   0x6008             STR      R0,[R1, #+0]
+    468              FTM1_C0SC |= FTM_CnSC_ELSA_MASK;    //低高低
+   \   000000CC   0x.... 0x....      LDR.W    R0,??DataTable12_43  ;; 0x4003900c
+   \   000000D0   0x6800             LDR      R0,[R0, #+0]
+   \   000000D2   0xF050 0x0004      ORRS     R0,R0,#0x4
+   \   000000D6   0x.... 0x....      LDR.W    R1,??DataTable12_43  ;; 0x4003900c
+   \   000000DA   0x6008             STR      R0,[R1, #+0]
+    469              FTM1_C1SC |= FTM_CnSC_ELSA_MASK;    //低高低
+   \   000000DC   0x.... 0x....      LDR.W    R0,??DataTable12_52  ;; 0x40039014
+   \   000000E0   0x6800             LDR      R0,[R0, #+0]
+   \   000000E2   0xF050 0x0004      ORRS     R0,R0,#0x4
+   \   000000E6   0x.... 0x....      LDR.W    R1,??DataTable12_52  ;; 0x40039014
+   \   000000EA   0x6008             STR      R0,[R1, #+0]
+    470              FTM1_OUTMASK=0XFC;//通道0，1输出，屏蔽其它通道
+   \   000000EC   0x20FC             MOVS     R0,#+252
+   \   000000EE   0x.... 0x....      LDR.W    R1,??DataTable12_44  ;; 0x40039060
+   \   000000F2   0x6008             STR      R0,[R1, #+0]
+    471              FTM1_CNTIN = 0;
+   \   000000F4   0x2000             MOVS     R0,#+0
+   \   000000F6   0x....             LDR.N    R1,??DataTable12_5  ;; 0x4003904c
+   \   000000F8   0x6008             STR      R0,[R1, #+0]
+    472              FTM1_MOD = 374; 
+   \   000000FA   0xF44F 0x70BB      MOV      R0,#+374
+   \   000000FE   0x....             LDR.N    R1,??DataTable12_4  ;; 0x40039008
+   \   00000100   0x6008             STR      R0,[R1, #+0]
+    473              FTM1_C0V = 0;
+   \   00000102   0x2000             MOVS     R0,#+0
+   \   00000104   0x.... 0x....      LDR.W    R1,??DataTable12_45  ;; 0x40039010
+   \   00000108   0x6008             STR      R0,[R1, #+0]
+    474              FTM1_C1V = 50 * 374 / 100;
+   \   0000010A   0x20BB             MOVS     R0,#+187
+   \   0000010C   0x.... 0x....      LDR.W    R1,??DataTable12_53  ;; 0x40039018
+   \   00000110   0x6008             STR      R0,[R1, #+0]
+    475              FTM1_CNT = 0;
+   \   00000112   0x2000             MOVS     R0,#+0
+   \   00000114   0x.... 0x....      LDR.W    R1,??DataTable12_54  ;; 0x40039004
+   \   00000118   0x6008             STR      R0,[R1, #+0]
+    476              FTM1_SYNC|=FTM_SYNC_SWSYNC_MASK;//使能软件触发
+   \   0000011A   0x.... 0x....      LDR.W    R0,??DataTable12_51  ;; 0x40039058
+   \   0000011E   0x6800             LDR      R0,[R0, #+0]
+   \   00000120   0xF050 0x0080      ORRS     R0,R0,#0x80
+   \   00000124   0x.... 0x....      LDR.W    R1,??DataTable12_51  ;; 0x40039058
+   \   00000128   0x6008             STR      R0,[R1, #+0]
+    477              
+    478              
+    479          }
+   \   0000012A   0x4770             BX       LR               ;; return
+    480          
+    481          
+    482          /***FUNC+*********************************************************************/
+    483          /* Name   : PWM1Output                                                       */
+    484          /* Descrp : output for PWM1                                                  */
+    485          /* Input  : None.                                                            */   
+    486          /* Output : None.                                                            */
+    487          /* Return : None.                                                            */   
+    488          /***FUNC-*********************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    489          void PWM1Output(UCHAR ucDuty)
+    490          {
+    491          
+    492              if (ucDuty >= 100)
+   \                     PWM1Output: (+1)
+   \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000002   0x2864             CMP      R0,#+100
+   \   00000004   0xDB0D             BLT.N    ??PWM1Output_0
+    493              {
+    494                  FTM1_C0V = 375;
+   \   00000006   0xF240 0x1077      MOVW     R0,#+375
+   \   0000000A   0x.... 0x....      LDR.W    R1,??DataTable12_45  ;; 0x40039010
+   \   0000000E   0x6008             STR      R0,[R1, #+0]
+    495                  FTM1_SYNC |= FTM_SYNC_SWSYNC_MASK;//使能软件触发
+   \   00000010   0x.... 0x....      LDR.W    R0,??DataTable12_51  ;; 0x40039058
+   \   00000014   0x6800             LDR      R0,[R0, #+0]
+   \   00000016   0xF050 0x0080      ORRS     R0,R0,#0x80
+   \   0000001A   0x.... 0x....      LDR.W    R1,??DataTable12_51  ;; 0x40039058
+   \   0000001E   0x6008             STR      R0,[R1, #+0]
+   \   00000020   0xE00E             B.N      ??PWM1Output_1
+    496              }
+    497              
+    498              else
+    499              {    
+    500                  FTM1_C0V = (U16)ucDuty * 374 / 100;
+   \                     ??PWM1Output_0: (+1)
+   \   00000022   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000024   0xF44F 0x71BB      MOV      R1,#+374
+   \   00000028   0x4348             MULS     R0,R1,R0
+   \   0000002A   0x2164             MOVS     R1,#+100
+   \   0000002C   0xFB90 0xF0F1      SDIV     R0,R0,R1
+   \   00000030   0x....             LDR.N    R1,??DataTable12_45  ;; 0x40039010
+   \   00000032   0x6008             STR      R0,[R1, #+0]
+    501                  FTM1_SYNC |= FTM_SYNC_SWSYNC_MASK;//使能软件触发
+   \   00000034   0x....             LDR.N    R0,??DataTable12_51  ;; 0x40039058
+   \   00000036   0x6800             LDR      R0,[R0, #+0]
+   \   00000038   0xF050 0x0080      ORRS     R0,R0,#0x80
+   \   0000003C   0x....             LDR.N    R1,??DataTable12_51  ;; 0x40039058
+   \   0000003E   0x6008             STR      R0,[R1, #+0]
+    502              }
+    503              
+    504          }
+   \                     ??PWM1Output_1: (+1)
+   \   00000040   0x4770             BX       LR               ;; return
+    505          
+    506          
+    507          
+    508          
+    509          /************************************************************************/
+    510          /*正交解码*/
+    511          //查看FTM1_CNT、FTM2_CNT就可知道当前计数值，查看TOFDIR、QUADIR可以知道转向。
+    512          /************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    513          void FTM_QUAD_init()
+    514          {
+    515              /*开启端口时钟*/
+    516              SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
+   \                     FTM_QUAD_init: (+1)
+   \   00000000   0x....             LDR.N    R0,??DataTable12_11  ;; 0x40048038
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0xF450 0x7000      ORRS     R0,R0,#0x200
+   \   00000008   0x....             LDR.N    R1,??DataTable12_11  ;; 0x40048038
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+    517          
+    518              /*选择管脚复用功能*/
+    519              //PORTA_PCR12 = PORT_PCR_MUX(7);
+    520              //PORTA_PCR13 = PORT_PCR_MUX(7);
+    521              //PORTA_PCR10 = PORT_PCR_MUX(6);
+    522              //PORTA_PCR11 = PORT_PCR_MUX(6);
+    523              
+    524              
+    525              PORTB_PCR0 = PORT_PCR_MUX(6);
+   \   0000000C   0xF44F 0x60C0      MOV      R0,#+1536
+   \   00000010   0x....             LDR.N    R1,??DataTable12_20  ;; 0x4004a000
+   \   00000012   0x6008             STR      R0,[R1, #+0]
+    526              PORTB_PCR1 = PORT_PCR_MUX(6); 
+   \   00000014   0xF44F 0x60C0      MOV      R0,#+1536
+   \   00000018   0x....             LDR.N    R1,??DataTable12_55  ;; 0x4004a004
+   \   0000001A   0x6008             STR      R0,[R1, #+0]
+    527              PORTB_PCR18 = PORT_PCR_MUX(6);
+   \   0000001C   0xF44F 0x60C0      MOV      R0,#+1536
+   \   00000020   0x....             LDR.N    R1,??DataTable12_56  ;; 0x4004a048
+   \   00000022   0x6008             STR      R0,[R1, #+0]
+    528              PORTB_PCR19 = PORT_PCR_MUX(6); 
+   \   00000024   0xF44F 0x60C0      MOV      R0,#+1536
+   \   00000028   0x....             LDR.N    R1,??DataTable12_57  ;; 0x4004a04c
+   \   0000002A   0x6008             STR      R0,[R1, #+0]
+    529              
+    530              
+    531              
+    532          
+    533              /*使能FTM1、FTM2时钟*/
+    534              SIM_SCGC6|=SIM_SCGC6_FTM1_MASK;
+   \   0000002C   0x....             LDR.N    R0,??DataTable12  ;; 0x4004803c
+   \   0000002E   0x6800             LDR      R0,[R0, #+0]
+   \   00000030   0xF050 0x7000      ORRS     R0,R0,#0x2000000
+   \   00000034   0x....             LDR.N    R1,??DataTable12  ;; 0x4004803c
+   \   00000036   0x6008             STR      R0,[R1, #+0]
+    535              SIM_SCGC3|=SIM_SCGC3_FTM2_MASK;
+   \   00000038   0x....             LDR.N    R0,??DataTable12_7  ;; 0x40048030
+   \   0000003A   0x6800             LDR      R0,[R0, #+0]
+   \   0000003C   0xF050 0x7080      ORRS     R0,R0,#0x1000000
+   \   00000040   0x....             LDR.N    R1,??DataTable12_7  ;; 0x40048030
+   \   00000042   0x6008             STR      R0,[R1, #+0]
+    536          
+    537              FTM1_MOD = 14000; //可根据需要设置
+   \   00000044   0xF243 0x60B0      MOVW     R0,#+14000
+   \   00000048   0x....             LDR.N    R1,??DataTable12_4  ;; 0x40039008
+   \   0000004A   0x6008             STR      R0,[R1, #+0]
+    538              FTM2_MOD = 14000;
+   \   0000004C   0xF243 0x60B0      MOVW     R0,#+14000
+   \   00000050   0x....             LDR.N    R1,??DataTable12_8  ;; 0x400b8008
+   \   00000052   0x6008             STR      R0,[R1, #+0]
+    539          
+    540              FTM1_CNTIN = 0;
+   \   00000054   0x2000             MOVS     R0,#+0
+   \   00000056   0x....             LDR.N    R1,??DataTable12_5  ;; 0x4003904c
+   \   00000058   0x6008             STR      R0,[R1, #+0]
+    541              FTM2_CNTIN = 0;
+   \   0000005A   0x2000             MOVS     R0,#+0
+   \   0000005C   0x....             LDR.N    R1,??DataTable12_9  ;; 0x400b804c
+   \   0000005E   0x6008             STR      R0,[R1, #+0]
+    542          
+    543              FTM1_MODE |= FTM_MODE_WPDIS_MASK; //禁止写保护
+   \   00000060   0x....             LDR.N    R0,??DataTable12_46  ;; 0x40039054
+   \   00000062   0x6800             LDR      R0,[R0, #+0]
+   \   00000064   0xF050 0x0004      ORRS     R0,R0,#0x4
+   \   00000068   0x....             LDR.N    R1,??DataTable12_46  ;; 0x40039054
+   \   0000006A   0x6008             STR      R0,[R1, #+0]
+    544              FTM2_MODE |= FTM_MODE_WPDIS_MASK; //禁止写保护
+   \   0000006C   0x....             LDR.N    R0,??DataTable12_58  ;; 0x400b8054
+   \   0000006E   0x6800             LDR      R0,[R0, #+0]
+   \   00000070   0xF050 0x0004      ORRS     R0,R0,#0x4
+   \   00000074   0x....             LDR.N    R1,??DataTable12_58  ;; 0x400b8054
+   \   00000076   0x6008             STR      R0,[R1, #+0]
+    545              FTM1_MODE |= FTM_MODE_FTMEN_MASK; //FTMEN=1,关闭TPM兼容模式，开启FTM所有功能
+   \   00000078   0x....             LDR.N    R0,??DataTable12_46  ;; 0x40039054
+   \   0000007A   0x6800             LDR      R0,[R0, #+0]
+   \   0000007C   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000080   0x....             LDR.N    R1,??DataTable12_46  ;; 0x40039054
+   \   00000082   0x6008             STR      R0,[R1, #+0]
+    546              FTM2_MODE |= FTM_MODE_FTMEN_MASK; //FTMEN=1,关闭TPM兼容模式，开启FTM所有功能
+   \   00000084   0x....             LDR.N    R0,??DataTable12_58  ;; 0x400b8054
+   \   00000086   0x6800             LDR      R0,[R0, #+0]
+   \   00000088   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   0000008C   0x....             LDR.N    R1,??DataTable12_58  ;; 0x400b8054
+   \   0000008E   0x6008             STR      R0,[R1, #+0]
+    547          
+    548              //FTM1_QDCTRL &= ~FTM_QDCTRL_QUADMODE_MASK; //选定编码模式为A相与B相编码模式
+    549              FTM1_QDCTRL |= FTM_QDCTRL_QUADMODE_MASK;//AB相同时判断极性
+   \   00000090   0x....             LDR.N    R0,??DataTable12_47  ;; 0x40039080
+   \   00000092   0x6800             LDR      R0,[R0, #+0]
+   \   00000094   0xF050 0x0008      ORRS     R0,R0,#0x8
+   \   00000098   0x....             LDR.N    R1,??DataTable12_47  ;; 0x40039080
+   \   0000009A   0x6008             STR      R0,[R1, #+0]
+    550              
+    551              FTM1_QDCTRL |= FTM_QDCTRL_QUADEN_MASK; //使能正交解码模式
+   \   0000009C   0x....             LDR.N    R0,??DataTable12_47  ;; 0x40039080
+   \   0000009E   0x6800             LDR      R0,[R0, #+0]
+   \   000000A0   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   000000A4   0x....             LDR.N    R1,??DataTable12_47  ;; 0x40039080
+   \   000000A6   0x6008             STR      R0,[R1, #+0]
+    552              //FTM2_QDCTRL &= ~FTM_QDCTRL_QUADMODE_MASK; //选定编码模式为A相与B相编码模式
+    553              FTM2_QDCTRL |= FTM_QDCTRL_QUADMODE_MASK;
+   \   000000A8   0x....             LDR.N    R0,??DataTable12_59  ;; 0x400b8080
+   \   000000AA   0x6800             LDR      R0,[R0, #+0]
+   \   000000AC   0xF050 0x0008      ORRS     R0,R0,#0x8
+   \   000000B0   0x....             LDR.N    R1,??DataTable12_59  ;; 0x400b8080
+   \   000000B2   0x6008             STR      R0,[R1, #+0]
+    554              
+    555              FTM2_QDCTRL |= FTM_QDCTRL_QUADEN_MASK; //使能正交解码模式
+   \   000000B4   0x....             LDR.N    R0,??DataTable12_59  ;; 0x400b8080
+   \   000000B6   0x6800             LDR      R0,[R0, #+0]
+   \   000000B8   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   000000BC   0x....             LDR.N    R1,??DataTable12_59  ;; 0x400b8080
+   \   000000BE   0x6008             STR      R0,[R1, #+0]
+    556          
+    557              FTM1_SC |= FTM_SC_CLKS(3);  //选择外部时钟
+   \   000000C0   0x....             LDR.N    R0,??DataTable12_6  ;; 0x40039000
+   \   000000C2   0x6800             LDR      R0,[R0, #+0]
+   \   000000C4   0xF050 0x0018      ORRS     R0,R0,#0x18
+   \   000000C8   0x....             LDR.N    R1,??DataTable12_6  ;; 0x40039000
+   \   000000CA   0x6008             STR      R0,[R1, #+0]
+    558          //   FTM1_CONF |=FTM_CONF_BDMMODE(3); //可根据需要选择
+    559              FTM2_SC |= FTM_SC_CLKS(3);
+   \   000000CC   0x....             LDR.N    R0,??DataTable12_10  ;; 0x400b8000
+   \   000000CE   0x6800             LDR      R0,[R0, #+0]
+   \   000000D0   0xF050 0x0018      ORRS     R0,R0,#0x18
+   \   000000D4   0x....             LDR.N    R1,??DataTable12_10  ;; 0x400b8000
+   \   000000D6   0x6008             STR      R0,[R1, #+0]
+    560          //   FTM2_CONF |=FTM_CONF_BDMMODE(3);
+    561          
+    562          }
+   \   000000D8   0x4770             BX       LR               ;; return
+
+   \                                 In section .bss, align 4
+    563          int speed_L;
+   \                     speed_L:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+    564          int direction;
+   \                     direction:
+   \   00000000                      DS8 4
+
+   \                                 In section .text, align 2, keep-with-next
+    565          void lptmr_pulse_clean(void)
+    566          {
+    567              LPTMR0_CSR  &= ~LPTMR_CSR_TEN_MASK;     //禁用LPT的时候就会自动清计数器的值
+   \                     lptmr_pulse_clean: (+1)
+   \   00000000   0x....             LDR.N    R0,??DataTable12_60  ;; 0x40040000
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0x0840             LSRS     R0,R0,#+1
+   \   00000006   0x0040             LSLS     R0,R0,#+1
+   \   00000008   0x....             LDR.N    R1,??DataTable12_60  ;; 0x40040000
+   \   0000000A   0x6008             STR      R0,[R1, #+0]
+    568              LPTMR0_CSR  |= LPTMR_CSR_TEN_MASK;
+   \   0000000C   0x....             LDR.N    R0,??DataTable12_60  ;; 0x40040000
+   \   0000000E   0x6800             LDR      R0,[R0, #+0]
+   \   00000010   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000014   0x....             LDR.N    R1,??DataTable12_60  ;; 0x40040000
+   \   00000016   0x6008             STR      R0,[R1, #+0]
+    569          }
+   \   00000018   0x4770             BX       LR               ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    570          int QUADRead_L(void)   
+    571          {                     
+   \                     QUADRead_L: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+    572                direction =GPIO_GetBit(PORT_A,13); //1正转
+   \   00000002   0x210D             MOVS     R1,#+13
+   \   00000004   0x2000             MOVS     R0,#+0
+   \   00000006   0x.... 0x....      BL       GPIO_GetBit
+   \   0000000A   0x....             LDR.N    R1,??DataTable12_61
+   \   0000000C   0x6008             STR      R0,[R1, #+0]
+    573                
+    574                if(direction)
+   \   0000000E   0x....             LDR.N    R0,??DataTable12_61
+   \   00000010   0x6800             LDR      R0,[R0, #+0]
+   \   00000012   0x2800             CMP      R0,#+0
+   \   00000014   0xD004             BEQ.N    ??QUADRead_L_0
+    575                {     
+    576                speed_L = LPTMR0_CNR;     //保存脉冲计数器计算值
+   \   00000016   0x....             LDR.N    R0,??DataTable12_62  ;; 0x4004000c
+   \   00000018   0x6800             LDR      R0,[R0, #+0]
+   \   0000001A   0x....             LDR.N    R1,??DataTable12_63
+   \   0000001C   0x6008             STR      R0,[R1, #+0]
+   \   0000001E   0xE004             B.N      ??QUADRead_L_1
+    577                }
+    578                else
+    579                {        
+    580                 speed_L =-LPTMR0_CNR;   
+   \                     ??QUADRead_L_0: (+1)
+   \   00000020   0x....             LDR.N    R0,??DataTable12_62  ;; 0x4004000c
+   \   00000022   0x6800             LDR      R0,[R0, #+0]
+   \   00000024   0x4240             RSBS     R0,R0,#+0
+   \   00000026   0x....             LDR.N    R1,??DataTable12_63
+   \   00000028   0x6008             STR      R0,[R1, #+0]
+    581                }
+    582                lptmr_pulse_clean();
+   \                     ??QUADRead_L_1: (+1)
+   \   0000002A   0x.... 0x....      BL       lptmr_pulse_clean
+    583                
+    584                return speed_L;
+   \   0000002E   0x....             LDR.N    R0,??DataTable12_63
+   \   00000030   0x6800             LDR      R0,[R0, #+0]
+   \   00000032   0xBD02             POP      {R1,PC}          ;; return
+    585          }
+    586          
+
+   \                                 In section .text, align 2, keep-with-next
+    587          void lptmr_pulse_counter(char pin_select)
+    588          {
+    589            uint16 compare_value=3056;     //3056
+   \                     lptmr_pulse_counter: (+1)
+   \   00000000   0xF44F 0x613F      MOV      R1,#+3056
+    590           
+    591            //Reset LPTMR module
+    592            LPTMR0_CSR=0x00;
+   \   00000004   0x2200             MOVS     R2,#+0
+   \   00000006   0x....             LDR.N    R3,??DataTable12_60  ;; 0x40040000
+   \   00000008   0x601A             STR      R2,[R3, #+0]
+    593            LPTMR0_PSR=0x00;
+   \   0000000A   0x2200             MOVS     R2,#+0
+   \   0000000C   0x....             LDR.N    R3,??DataTable12_64  ;; 0x40040004
+   \   0000000E   0x601A             STR      R2,[R3, #+0]
+    594            LPTMR0_CMR=0x00;
+   \   00000010   0x2200             MOVS     R2,#+0
+   \   00000012   0x....             LDR.N    R3,??DataTable12_65  ;; 0x40040008
+   \   00000014   0x601A             STR      R2,[R3, #+0]
+    595              SIM_SCGC5 |= SIM_SCGC5_LPTIMER_MASK;
+   \   00000016   0x....             LDR.N    R2,??DataTable12_11  ;; 0x40048038
+   \   00000018   0x6812             LDR      R2,[R2, #+0]
+   \   0000001A   0xF052 0x0201      ORRS     R2,R2,#0x1
+   \   0000001E   0x....             LDR.N    R3,??DataTable12_11  ;; 0x40048038
+   \   00000020   0x601A             STR      R2,[R3, #+0]
+    596              
+    597            //Set up GPIO
+    598            if(pin_select==LPTMR_ALT1)
+   \   00000022   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000024   0x2801             CMP      R0,#+1
+   \   00000026   0xD124             BNE.N    ??lptmr_pulse_counter_0
+    599            {
+    600              SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK; //Turn on PORTA clock
+   \   00000028   0x....             LDR.N    R2,??DataTable12_11  ;; 0x40048038
+   \   0000002A   0x6812             LDR      R2,[R2, #+0]
+   \   0000002C   0xF452 0x7200      ORRS     R2,R2,#0x200
+   \   00000030   0x....             LDR.N    R3,??DataTable12_11  ;; 0x40048038
+   \   00000032   0x601A             STR      R2,[R3, #+0]
+    601              PORTA_PCR19=PORT_PCR_MUX(0x6); //Use ALT6 on PTA19
+   \   00000034   0xF44F 0x62C0      MOV      R2,#+1536
+   \   00000038   0x....             LDR.N    R3,??DataTable12_66  ;; 0x4004904c
+   \   0000003A   0x601A             STR      R2,[R3, #+0]
+    602          
+    603              //printf("Testing ALT1 pin on PORTA19\n");
+    604              //printf("\tTWR-K70F120M: ALT1 is conected to pin 18 on J15\n");
+    605            }
+    606            else if(pin_select==LPTMR_ALT2)
+    607            {
+    608              SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK; //Turn on PORTC clock
+    609              PORTC_PCR5=PORT_PCR_MUX(0x3); //Use ALT4 on PTC5
+    610            }
+    611            else
+    612            {
+    613              return;
+    614            }
+    615          
+    616            LPTMR0_PSR=LPTMR_PSR_PCS(0x01)|LPTMR_PSR_PBYP_MASK; //Use LPO clock but bypass glitch filter  ox1
+   \                     ??lptmr_pulse_counter_1: (+1)
+   \   0000003C   0x2205             MOVS     R2,#+5
+   \   0000003E   0x....             LDR.N    R3,??DataTable12_64  ;; 0x40040004
+   \   00000040   0x601A             STR      R2,[R3, #+0]
+    617            LPTMR0_CMR=LPTMR_CMR_COMPARE(compare_value);  //Set compare value
+   \   00000042   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000044   0x....             LDR.N    R2,??DataTable12_65  ;; 0x40040008
+   \   00000046   0x6011             STR      R1,[R2, #+0]
+    618            LPTMR0_CSR=LPTMR_CSR_TPS(pin_select)|LPTMR_CSR_TMS_MASK; //Set LPT to use the pin selected, and put in pulse count mode, on rising edge (default)
+   \   00000048   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000004A   0x0100             LSLS     R0,R0,#+4
+   \   0000004C   0xF010 0x0030      ANDS     R0,R0,#0x30
+   \   00000050   0xF050 0x0002      ORRS     R0,R0,#0x2
+   \   00000054   0x....             LDR.N    R1,??DataTable12_60  ;; 0x40040000
+   \   00000056   0x6008             STR      R0,[R1, #+0]
+    619          
+    620            
+    621          
+    622            LPTMR0_CSR|=LPTMR_CSR_TEN_MASK; //Turn on LPT
+   \   00000058   0x....             LDR.N    R0,??DataTable12_60  ;; 0x40040000
+   \   0000005A   0x6800             LDR      R0,[R0, #+0]
+   \   0000005C   0xF050 0x0001      ORRS     R0,R0,#0x1
+   \   00000060   0x....             LDR.N    R1,??DataTable12_60  ;; 0x40040000
+   \   00000062   0x6008             STR      R0,[R1, #+0]
+    623            LPTMR0_CSR|=LPTMR_CSR_TPP_MASK;  //低电平触发
+   \   00000064   0x....             LDR.N    R0,??DataTable12_60  ;; 0x40040000
+   \   00000066   0x6800             LDR      R0,[R0, #+0]
+   \   00000068   0xF050 0x0008      ORRS     R0,R0,#0x8
+   \   0000006C   0x....             LDR.N    R1,??DataTable12_60  ;; 0x40040000
+   \   0000006E   0x6008             STR      R0,[R1, #+0]
+    624           // LPTMR0_CSR|=LPTMR_CSR_TIE_MASK;  
+    625            /*When the Timer Interrupt Enable is set, the LPTMR Interrupt is generated whenever the Timer Compare
+    626          Flag is also set.
+    627          0 Timer Interrupt Disabled.
+    628          1 Timer Interrupt Enabled.
+    629            */
+    630            //Wait for compare flag to be set
+    631           //while((LPTMR0_CSR&LPTMR_CSR_TCF_MASK)==0)
+    632            {
+    633              //This may not get proper counter data if the CNR is read at the same time it is incremented
+    634              //printf("Current value of pulse count register CNR is %d\n",get_counter_value());
+    635            }
+    636          
+    637            
+    638          }
+   \                     ??lptmr_pulse_counter_2: (+1)
+   \   00000070   0x4770             BX       LR               ;; return
+   \                     ??lptmr_pulse_counter_0: (+1)
+   \   00000072   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000074   0x2802             CMP      R0,#+2
+   \   00000076   0xD10A             BNE.N    ??lptmr_pulse_counter_3
+   \   00000078   0x....             LDR.N    R2,??DataTable12_11  ;; 0x40048038
+   \   0000007A   0x6812             LDR      R2,[R2, #+0]
+   \   0000007C   0xF452 0x6200      ORRS     R2,R2,#0x800
+   \   00000080   0x....             LDR.N    R3,??DataTable12_11  ;; 0x40048038
+   \   00000082   0x601A             STR      R2,[R3, #+0]
+   \   00000084   0xF44F 0x7240      MOV      R2,#+768
+   \   00000088   0x....             LDR.N    R3,??DataTable12_67  ;; 0x4004b014
+   \   0000008A   0x601A             STR      R2,[R3, #+0]
+   \   0000008C   0xE7D6             B.N      ??lptmr_pulse_counter_1
+   \                     ??lptmr_pulse_counter_3: (+1)
+   \   0000008E   0xE7EF             B.N      ??lptmr_pulse_counter_2
+    639          
+    640          
+    641          /*!
+    642           *  @brief      LPTMR脉冲计数初始化
+    643           *  @param      LPT0_ALTn   LPTMR脉冲计数管脚
+    644           *  @param      count       LPTMR脉冲比较值
+    645           *  @param      LPT_CFG     LPTMR脉冲计数方式：上升沿计数或下降沿计数
+    646           *  @since      v5.0
+    647           *  Sample usage:       lptmr_pulse_init(LPT0_ALT1,0xFFFF,LPT_Rising);     // LPTMR 脉冲捕捉，捕捉0xFFFF后触发中断请求（需要开中断才执行中断复位函数），上升沿捕捉
+    648           */
+
+   \                                 In section .text, align 2, keep-with-next
+    649          void lptmr_pulse_init(LPT0_ALTn altn, uint16 count, LPT_CFG cfg)
+    650          {
+   \                     lptmr_pulse_init: (+1)
+   \   00000000   0xB410             PUSH     {R4}
+    651          
+    652          #if  defined(MK60F15)
+    653              OSC0_CR |= OSC_CR_ERCLKEN_MASK;                              //使能 OSCERCLK
+    654          #endif
+    655          
+    656              // 开启模块时钟
+    657              SIM_SCGC5 |= SIM_SCGC5_LPTIMER_MASK;                        //使能LPT模块时钟
+   \   00000002   0x....             LDR.N    R3,??DataTable12_11  ;; 0x40048038
+   \   00000004   0x681B             LDR      R3,[R3, #+0]
+   \   00000006   0xF053 0x0301      ORRS     R3,R3,#0x1
+   \   0000000A   0x....             LDR.N    R4,??DataTable12_11  ;; 0x40048038
+   \   0000000C   0x6023             STR      R3,[R4, #+0]
+    658          
+    659              //设置输入管脚
+    660              if(altn == LPTMR_ALT1)
+   \   0000000E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000010   0x2801             CMP      R0,#+1
+   \   00000012   0xD10A             BNE.N    ??lptmr_pulse_init_0
+    661              {
+    662                 // port_init(PTA19, 0x06 << PORT_PCR_MUX_SHIFT );            //在PTA19上使用 ALT6
+    663                  //GPIO_Init(PORT_B,9,GPO,LVL_H);    // 前   CLK
+    664                    SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK; //Turn on PORTA clock
+   \   00000014   0x....             LDR.N    R3,??DataTable12_11  ;; 0x40048038
+   \   00000016   0x681B             LDR      R3,[R3, #+0]
+   \   00000018   0xF453 0x7300      ORRS     R3,R3,#0x200
+   \   0000001C   0x....             LDR.N    R4,??DataTable12_11  ;; 0x40048038
+   \   0000001E   0x6023             STR      R3,[R4, #+0]
+    665                    PORTA_PCR19=PORT_PCR_MUX(0x6); //Use ALT6 on PTA19
+   \   00000020   0xF44F 0x63C0      MOV      R3,#+1536
+   \   00000024   0x....             LDR.N    R4,??DataTable12_66  ;; 0x4004904c
+   \   00000026   0x6023             STR      R3,[R4, #+0]
+   \   00000028   0xE00C             B.N      ??lptmr_pulse_init_1
+    666              }
+    667              else if(altn == LPTMR_ALT2)
+   \                     ??lptmr_pulse_init_0: (+1)
+   \   0000002A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000002C   0x2802             CMP      R0,#+2
+   \   0000002E   0xD109             BNE.N    ??lptmr_pulse_init_1
+    668              {
+    669                    SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK; //Turn on PORTC clock
+   \   00000030   0x....             LDR.N    R3,??DataTable12_11  ;; 0x40048038
+   \   00000032   0x681B             LDR      R3,[R3, #+0]
+   \   00000034   0xF453 0x6300      ORRS     R3,R3,#0x800
+   \   00000038   0x....             LDR.N    R4,??DataTable12_11  ;; 0x40048038
+   \   0000003A   0x6023             STR      R3,[R4, #+0]
+    670                   PORTC_PCR5=PORT_PCR_MUX(0x4); //Use ALT4 on PTC5
+   \   0000003C   0xF44F 0x6380      MOV      R3,#+1024
+   \   00000040   0x....             LDR.N    R4,??DataTable12_67  ;; 0x4004b014
+   \   00000042   0x6023             STR      R3,[R4, #+0]
+    671                 // port_init(PTC5, 0x04 << PORT_PCR_MUX_SHIFT );             //在PTC5上使用 ALT4
+    672              }
+    673              else                                    //不可能发生事件
+    674              {
+    675                 // ASSERT((altn == LPTMR_ALT1 ) || (altn == LPTMR_ALT2 ));   //设置管脚有误？
+    676              }
+    677          
+    678              // 清状态寄存器
+    679              LPTMR0_CSR = 0x00;                                          //先关了LPT，这样才能设置时钟分频,清空计数值等
+   \                     ??lptmr_pulse_init_1: (+1)
+   \   00000044   0x2300             MOVS     R3,#+0
+   \   00000046   0x....             LDR.N    R4,??DataTable12_60  ;; 0x40040000
+   \   00000048   0x6023             STR      R3,[R4, #+0]
+    680          
+    681          #if defined(MK60DZ10)
+    682              //选择时钟源
+    683              LPTMR0_PSR  =   ( 0
+    684                                | LPTMR_PSR_PCS(1)                  //选择时钟源： 0 为 MCGIRCLK ，1为 LPO（1KHz） ，2为 ERCLK32K ，3为 OSCERCLK
+    685                                | LPTMR_PSR_PBYP_MASK               //旁路 预分频/干扰滤波器 ,即不用 预分频/干扰滤波器(注释了表示使用预分频/干扰滤波器)
+    686                                //| LPTMR_PSR_PRESCALE(1)           //预分频值 = 2^(n+1) ,n = 0~ 0xF
+    687                              );
+    688          #elif defined(MK60F15)
+    689              //选择时钟源
+    690              LPTMR0_PSR  =   ( 0
+    691                                | LPTMR_PSR_PCS(3)          //选择时钟源： 0 为 MCGIRCLK ，1为 LPO（1KHz） ，2为 ERCLK32K ，3为 OSCERCLK
+    692                                //| LPTMR_PSR_PBYP_MASK     //旁路 预分频/干扰滤波器 ,即不用 预分频/干扰滤波器(注释了表示使用预分频/干扰滤波器)
+    693                                | LPTMR_PSR_PRESCALE(4)     //预分频值 = 2^(n+1) ,n = 0~ 0xF
+    694                              );
+    695          #endif
+    696          
+    697              // 设置累加计数值
+    698              LPTMR0_CMR  =   LPTMR_CMR_COMPARE(count);                   //设置比较值
+   \   0000004A   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000004C   0x....             LDR.N    R3,??DataTable12_65  ;; 0x40040008
+   \   0000004E   0x6019             STR      R1,[R3, #+0]
+    699          
+    700              // 管脚设置、使能中断
+    701              LPTMR0_CSR  =  (0
+    702                              | LPTMR_CSR_TPS(altn)       // 选择输入管脚 选择
+    703                              | LPTMR_CSR_TMS_MASK        // 选择脉冲计数 (注释了表示时间计数模式)
+    704                              | ( cfg == LPT_Falling ?  LPTMR_CSR_TPP_MASK :   0  )  //脉冲计数器触发方式选择：0为高电平有效，上升沿加1
+    705                              | LPTMR_CSR_TEN_MASK        //使能LPT(注释了表示禁用)
+    706                              | LPTMR_CSR_TIE_MASK        //中断使能
+    707                              //| LPTMR_CSR_TFC_MASK      //0:计数值等于比较值就复位；1：溢出复位（注释表示0）
+    708                             );
+   \   00000050   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   00000052   0x2A01             CMP      R2,#+1
+   \   00000054   0xD101             BNE.N    ??lptmr_pulse_init_2
+   \   00000056   0x2108             MOVS     R1,#+8
+   \   00000058   0xE000             B.N      ??lptmr_pulse_init_3
+   \                     ??lptmr_pulse_init_2: (+1)
+   \   0000005A   0x2100             MOVS     R1,#+0
+   \                     ??lptmr_pulse_init_3: (+1)
+   \   0000005C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000005E   0x0100             LSLS     R0,R0,#+4
+   \   00000060   0xF010 0x0030      ANDS     R0,R0,#0x30
+   \   00000064   0x4308             ORRS     R0,R1,R0
+   \   00000066   0xF050 0x0043      ORRS     R0,R0,#0x43
+   \   0000006A   0x....             LDR.N    R1,??DataTable12_60  ;; 0x40040000
+   \   0000006C   0x6008             STR      R0,[R1, #+0]
+    709          }
+   \   0000006E   0xBC10             POP      {R4}
+   \   00000070   0x4770             BX       LR               ;; return
+    710          
+    711          
+    712          /*!
+    713           *  @brief      获取LPTMR脉冲计数值
+    714           *  @return     脉冲计数值
+    715           *  @since      v5.0
+    716           *  Sample usage:       uint16 data = lptmr_pulse_get();  //获取脉冲计数值
+    717           */
+
+   \                                 In section .text, align 2, keep-with-next
+    718          uint16 lptmr_pulse_get(void)
+    719          {
+    720              uint16 data;
+    721              if(LPTMR0_CSR & LPTMR_CSR_TCF_MASK)     //已经溢出了
+   \                     lptmr_pulse_get: (+1)
+   \   00000000   0x....             LDR.N    R0,??DataTable12_60  ;; 0x40040000
+   \   00000002   0x6800             LDR      R0,[R0, #+0]
+   \   00000004   0x0600             LSLS     R0,R0,#+24
+   \   00000006   0xD502             BPL.N    ??lptmr_pulse_get_0
+    722              {
+    723          
+    724                  data = ~0;                          //返回 0xffffffff 表示错误
+   \   00000008   0xF64F 0x70FF      MOVW     R0,#+65535
+   \   0000000C   0xE001             B.N      ??lptmr_pulse_get_1
+    725              }
+    726              else
+    727              {
+    728          #if defined(MK60F15)
+    729                  LPTMR0_CNR = 0;
+    730          #endif
+    731                  data = LPTMR0_CNR;
+   \                     ??lptmr_pulse_get_0: (+1)
+   \   0000000E   0x....             LDR.N    R0,??DataTable12_62  ;; 0x4004000c
+   \   00000010   0x6800             LDR      R0,[R0, #+0]
+    732              }
+    733              return data;
+   \                     ??lptmr_pulse_get_1: (+1)
+   \   00000012   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000014   0x4770             BX       LR               ;; return
+    734          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12:
+   \   00000000   0x4004803C         DC32     0x4004803c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_1:
+   \   00000000   0x40038008         DC32     0x40038008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_2:
+   \   00000000   0x4003804C         DC32     0x4003804c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_3:
+   \   00000000   0x40038000         DC32     0x40038000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_4:
+   \   00000000   0x40039008         DC32     0x40039008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_5:
+   \   00000000   0x4003904C         DC32     0x4003904c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_6:
+   \   00000000   0x40039000         DC32     0x40039000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_7:
+   \   00000000   0x40048030         DC32     0x40048030
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_8:
+   \   00000000   0x400B8008         DC32     0x400b8008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_9:
+   \   00000000   0x400B804C         DC32     0x400b804c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_10:
+   \   00000000   0x400B8000         DC32     0x400b8000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_11:
+   \   00000000   0x40048038         DC32     0x40048038
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_12:
+   \   00000000   0x4004B004         DC32     0x4004b004
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_13:
+   \   00000000   0x4004B008         DC32     0x4004b008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_14:
+   \   00000000   0x4004B00C         DC32     0x4004b00c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_15:
+   \   00000000   0x4004B010         DC32     0x4004b010
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_16:
+   \   00000000   0x4004C010         DC32     0x4004c010
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_17:
+   \   00000000   0x4004C014         DC32     0x4004c014
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_18:
+   \   00000000   0x4004C018         DC32     0x4004c018
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_19:
+   \   00000000   0x4004C01C         DC32     0x4004c01c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_20:
+   \   00000000   0x4004A000         DC32     0x4004a000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_21:
+   \   00000000   0x40049024         DC32     0x40049024
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_22:
+   \   00000000   0x40049028         DC32     0x40049028
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_23:
+   \   00000000   0x4004902C         DC32     0x4004902c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_24:
+   \   00000000   0x........         DC32     FTMx
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_25:
+   \   00000000   0x4003802C         DC32     0x4003802c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_26:
+   \   00000000   0x40038034         DC32     0x40038034
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_27:
+   \   00000000   0x4003803C         DC32     0x4003803c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_28:
+   \   00000000   0x40038044         DC32     0x40038044
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_29:
+   \   00000000   0x40038054         DC32     0x40038054
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_30:
+   \   00000000   0x40038064         DC32     0x40038064
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_31:
+   \   00000000   0x4003805C         DC32     0x4003805c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_32:
+   \   00000000   0x4003806C         DC32     0x4003806c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_33:
+   \   00000000   0x40038070         DC32     0x40038070
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_34:
+   \   00000000   0x40038080         DC32     0x40038080
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_35:
+   \   00000000   0x40038090         DC32     0x40038090
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_36:
+   \   00000000   0x40038094         DC32     0x40038094
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_37:
+   \   00000000   0x40038098         DC32     0x40038098
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_38:
+   \   00000000   0x40038040         DC32     0x40038040
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_39:
+   \   00000000   0x40038048         DC32     0x40038048
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_40:
+   \   00000000   0x40038030         DC32     0x40038030
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_41:
+   \   00000000   0x40038038         DC32     0x40038038
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_42:
+   \   00000000   0x40049020         DC32     0x40049020
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_43:
+   \   00000000   0x4003900C         DC32     0x4003900c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_44:
+   \   00000000   0x40039060         DC32     0x40039060
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_45:
+   \   00000000   0x40039010         DC32     0x40039010
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_46:
+   \   00000000   0x40039054         DC32     0x40039054
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_47:
+   \   00000000   0x40039080         DC32     0x40039080
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_48:
+   \   00000000   0x40039064         DC32     0x40039064
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_49:
+   \   00000000   0x40039068         DC32     0x40039068
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_50:
+   \   00000000   0x4003908C         DC32     0x4003908c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_51:
+   \   00000000   0x40039058         DC32     0x40039058
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_52:
+   \   00000000   0x40039014         DC32     0x40039014
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_53:
+   \   00000000   0x40039018         DC32     0x40039018
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_54:
+   \   00000000   0x40039004         DC32     0x40039004
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_55:
+   \   00000000   0x4004A004         DC32     0x4004a004
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_56:
+   \   00000000   0x4004A048         DC32     0x4004a048
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_57:
+   \   00000000   0x4004A04C         DC32     0x4004a04c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_58:
+   \   00000000   0x400B8054         DC32     0x400b8054
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_59:
+   \   00000000   0x400B8080         DC32     0x400b8080
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_60:
+   \   00000000   0x40040000         DC32     0x40040000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_61:
+   \   00000000   0x........         DC32     direction
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_62:
+   \   00000000   0x4004000C         DC32     0x4004000c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_63:
+   \   00000000   0x........         DC32     speed_L
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_64:
+   \   00000000   0x40040004         DC32     0x40040004
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_65:
+   \   00000000   0x40040008         DC32     0x40040008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_66:
+   \   00000000   0x4004904C         DC32     0x4004904c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable12_67:
+   \   00000000   0x4004B014         DC32     0x4004b014
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   CPWM_COMBINE_INIT
+       0   CPWM_INIT
+       8   FTM_Input_init
+         8   -> enable_irq
+       0   FTM_QUAD_init
+       8   Ftm_disable_int
+         8   -> disable_irq
+       8   Ftm_enable_int
+         8   -> enable_irq
+       0   Ftm_init
+       0   Ftm_stop
+       0   PWM1Output
+       0   PWM_Init
+       8   QUADRead_L
+         8   -> GPIO_GetBit
+         8   -> lptmr_pulse_clean
+       0   lptmr_pulse_clean
+       0   lptmr_pulse_counter
+       0   lptmr_pulse_get
+       4   lptmr_pulse_init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable12
+       4  ??DataTable12_1
+       4  ??DataTable12_10
+       4  ??DataTable12_11
+       4  ??DataTable12_12
+       4  ??DataTable12_13
+       4  ??DataTable12_14
+       4  ??DataTable12_15
+       4  ??DataTable12_16
+       4  ??DataTable12_17
+       4  ??DataTable12_18
+       4  ??DataTable12_19
+       4  ??DataTable12_2
+       4  ??DataTable12_20
+       4  ??DataTable12_21
+       4  ??DataTable12_22
+       4  ??DataTable12_23
+       4  ??DataTable12_24
+       4  ??DataTable12_25
+       4  ??DataTable12_26
+       4  ??DataTable12_27
+       4  ??DataTable12_28
+       4  ??DataTable12_29
+       4  ??DataTable12_3
+       4  ??DataTable12_30
+       4  ??DataTable12_31
+       4  ??DataTable12_32
+       4  ??DataTable12_33
+       4  ??DataTable12_34
+       4  ??DataTable12_35
+       4  ??DataTable12_36
+       4  ??DataTable12_37
+       4  ??DataTable12_38
+       4  ??DataTable12_39
+       4  ??DataTable12_4
+       4  ??DataTable12_40
+       4  ??DataTable12_41
+       4  ??DataTable12_42
+       4  ??DataTable12_43
+       4  ??DataTable12_44
+       4  ??DataTable12_45
+       4  ??DataTable12_46
+       4  ??DataTable12_47
+       4  ??DataTable12_48
+       4  ??DataTable12_49
+       4  ??DataTable12_5
+       4  ??DataTable12_50
+       4  ??DataTable12_51
+       4  ??DataTable12_52
+       4  ??DataTable12_53
+       4  ??DataTable12_54
+       4  ??DataTable12_55
+       4  ??DataTable12_56
+       4  ??DataTable12_57
+       4  ??DataTable12_58
+       4  ??DataTable12_59
+       4  ??DataTable12_6
+       4  ??DataTable12_60
+       4  ??DataTable12_61
+       4  ??DataTable12_62
+       4  ??DataTable12_63
+       4  ??DataTable12_64
+       4  ??DataTable12_65
+       4  ??DataTable12_66
+       4  ??DataTable12_67
+       4  ??DataTable12_7
+       4  ??DataTable12_8
+       4  ??DataTable12_9
+     300  CPWM_COMBINE_INIT
+     110  CPWM_INIT
+     844  FTM_Input_init
+     218  FTM_QUAD_init
+      12  FTMx
+      12  Ftm_disable_int
+      12  Ftm_enable_int
+     146  Ftm_init
+      68  Ftm_stop
+      66  PWM1Output
+     412  PWM_Init
+      52  QUADRead_L
+       4  direction
+      26  lptmr_pulse_clean
+     144  lptmr_pulse_counter
+      22  lptmr_pulse_get
+     114  lptmr_pulse_init
+       4  speed_L
+
+ 
+     8 bytes in section .bss
+    12 bytes in section .data
+ 2 818 bytes in section .text
+ 
+ 2 818 bytes of CODE memory
+    20 bytes of DATA memory
+
+Errors: none
+Warnings: none
